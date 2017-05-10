@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>CryptoChat</title>
+</head>
+<body>
+<div>
+    username <input type="text" id="txtUsername"/>
+    room <input type="text" id="txtRoom"/>
+    password <input type="password" id="txtPassword"/>
+    <input type="button" id="btnJoin" value="Join Room"/>
+    <hr/>
+    message <input type="text" id="txtMessage"/>
+    <input type="button" id="btnSendMessage" value="Send"/>
+    <hr/>
+    <ul id="discussion"></ul>
+</div>
+<script src="Scripts/jquery-3.1.1.min.js"></script>
+<script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
+<script src="signalr/hubs"></script>
+<script src="Scripts/cryptochat.js"></script>
+</body>
+</html>
