@@ -80,6 +80,11 @@
             User u = ACTIVE_CONNECTIONS[Context.ConnectionId];
             ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
 
+            if (null == u)
+            {
+                return base.OnDisconnected(stopCalled);
+            }
+
             // was in a room
             Send("System", u.Room, String.Format("User '{0}' has disconnected", u.Username));
             Clients.All.broadcastMessage("System", String.Format("{0} disconnected", (Object) Clients.Caller.ToString()));
