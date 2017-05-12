@@ -2,6 +2,8 @@
 let room;
 let key;
 
+const UNIQUE_APPLICATION_CODE = "69b2af88e0c9de7333ca4526cd0557822916bff1733e7acdbfd9829f69eae22e6ff8ffd377cd6850a68c049061557c422adc72175db612ad623d2a728c5d4091";
+
 const handleGetMessage = function(time, user, message) {
     const u = decrypt(user);
     const m = decrypt(message);
@@ -42,13 +44,13 @@ const encrypt = function(data) {
     if (null == key) {
         throw "IllegalStateException";
     }
-    return CryptoJS.AES.encrypt(data, key, { mode: CryptoJS.mode.CTR, iv: CryptoJS.enc.Hex.parse('FF') }).toString(CryptoJS.enc.Base64);
+    return CryptoJS.AES.encrypt(data, key, { mode: CryptoJS.mode.CTR, iv : CryptoJS.enc.Hex.parse(UNIQUE_APPLICATION_CODE) }).toString(CryptoJS.enc.Base64);
 };
 const decrypt = function(data) {
     if (null == key) {
         throw "IllegalStateException";
     }
-    return CryptoJS.AES.decrypt(data, key, { mode: CryptoJS.mode.CTR }).toString(CryptoJS.enc.Utf8);
+    return CryptoJS.AES.decrypt(data, key, { mode: CryptoJS.mode.CTR, iv : CryptoJS.enc.Hex.parse(UNIQUE_APPLICATION_CODE) }).toString(CryptoJS.enc.Utf8);
 };
 const keyGenerationStatusCallback = function(percentDone) {
     console.log(`Computed ${percentDone}%/100%`);
