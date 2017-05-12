@@ -68,7 +68,7 @@ const startKeyGeneration = function(pass, room) {
     // start key generation
     key = CryptoJS.PBKDF2(keyPassword,
         keySalt,
-        { keySize: 256 / 32, iterations: iterations, hasher: CryptoJS.SHA3 },
+        { keySize: 256 / 32, iterations: iterations, hasher: CryptoJS.algo.SHA3 },
         keyGenerationStatusCallback);
     console.log(key.toString(CryptoJS.enc.Hex));
 };
