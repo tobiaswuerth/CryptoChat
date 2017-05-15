@@ -87,17 +87,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="scripts\vendor\jquery-3.1.1.intellisense.js" />
     <Content Include="scripts\cryptochat.js" />
     <Content Include="scripts\extensions.js" />
     <Content Include="scripts\handler.js" />
     <Content Include="scripts\security.js" />
-    <Content Include="scripts\vendor\jquery-3.1.1.js" />
     <Content Include="scripts\vendor\jquery-3.1.1.min.js" />
-    <Content Include="scripts\vendor\jquery-3.1.1.slim.js" />
-    <Content Include="scripts\vendor\jquery-3.1.1.slim.min.js" />
-    <Content Include="scripts\vendor\jquery-3.1.1.slim.min.map" />
-    <Content Include="scripts\vendor\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -108,18 +102,17 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="packages.config" />
-    <Content Include="scripts\vendor\jquery.signalR-2.2.2.js" />
     <Content Include="scripts\vendor\jquery.signalR-2.2.2.min.js" />
-    <Content Include="scripts\vendor\security\aes.js" />
-    <Content Include="scripts\vendor\security\cipher-core.js" />
-    <Content Include="scripts\vendor\security\core.js" />
-    <Content Include="scripts\vendor\security\enc-base64.js" />
-    <Content Include="scripts\vendor\security\format-hex.js" />
-    <Content Include="scripts\vendor\security\hmac.js" />
-    <Content Include="scripts\vendor\security\mode-ctr.js" />
+    <Content Include="scripts\vendor\security\aes-min.js" />
+    <Content Include="scripts\vendor\security\cipher-core-min.js" />
+    <Content Include="scripts\vendor\security\core-min.js" />
+    <Content Include="scripts\vendor\security\enc-base64-min.js" />
+    <Content Include="scripts\vendor\security\format-hex-min.js" />
+    <Content Include="scripts\vendor\security\hmac-min.js" />
+    <Content Include="scripts\vendor\security\mode-ctr-min.js" />
     <Content Include="scripts\vendor\security\pbkdf2.js" />
-    <Content Include="scripts\vendor\security\sha3.js" />
-    <Content Include="scripts\vendor\security\x64-core.js" />
+    <Content Include="scripts\vendor\security\sha3-min.js" />
+    <Content Include="scripts\vendor\security\x64-core-min.js" />
     <Content Include="scripts\vendor\security\xss.js" />
     <Content Include="Web.config" />
   </ItemGroup>
