@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ch.upzone.CryptoChat
+﻿namespace ch.upzone.CryptoChat
 {
+    #region includes
+
+    using System;
+
+    #endregion
+
     public class User
     {
         public String Username { get; set; }

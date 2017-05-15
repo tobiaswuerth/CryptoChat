@@ -4,30 +4,39 @@
     <title>CryptoChat</title>
 </head>
 <body>
-    <div>
-        username <input type="text" id="txtUsername" />
-        room <input type="text" id="txtRoom" />
-        password <input type="password" id="txtPassword" />
-        <input type="button" id="btnJoin" value="Join Room" />
-        <hr />
-        message <input type="text" id="txtMessage" />
-        <input type="button" id="btnSendMessage" value="Send" />
-        <hr />
-        <ul id="discussion"></ul>
-    </div>
-    <script src="scripts/vendor/security/core-min.js"></script>
-    <script src="scripts/vendor/security/x64-core-min.js"></script>
-    <script src="scripts/vendor/security/cipher-core-min.js"></script>
-    <script src="scripts/vendor/security/mode-ctr-min.js"></script>
-    <script src="scripts/vendor/security/hmac-sha3.js"></script>
-    <script src="scripts/vendor/security/aes.js"></script>
-    <script src="scripts/vendor/security/sha3.js"></script>
-    <script src="scripts/vendor/security/pbkdf2.js"></script>
+<div>
+    username <input type="text" id="txtUsername"/>
+    room <input type="text" id="txtRoom"/>
+    password <input type="password" id="txtPassword"/>
+    <input type="button" id="btnJoin" value="Join Room"/>
+    <hr/>
+    msg <input type="text" id="txtMessage"/>
+    <input type="button" id="btnSendMessage" value="Send"/>
+    <hr/>
+    <ul id="discussion"></ul>
+</div>
 
-    <script src="scripts/vendor/jquery-3.1.1.min.js"></script>
-    <script src="scripts/vendor/jquery.signalR-2.2.2.min.js"></script>
-    <script src="signalr/hubs"></script>
-    <script src="scripts/extensions.js"></script>
-    <script src="scripts/cryptochat.js"></script>
+<script src="scripts/vendor/security/core.js"></script>
+<script src="scripts/vendor/security/x64-core.js"></script>
+<script src="scripts/vendor/security/enc-base64.js"></script>
+<script src="scripts/vendor/security/cipher-core.js"></script>
+<script src="scripts/vendor/security/format-hex.js"></script>
+<script src="scripts/vendor/security/hmac.js"></script>
+<script src="scripts/vendor/security/sha3.js"></script>
+<script src="scripts/vendor/security/pbkdf2.js"></script>
+<script src="scripts/vendor/security/mode-ctr.js"></script>
+<script src="scripts/vendor/security/aes.js"></script>
+
+<script src="scripts/vendor/jquery-3.1.1.min.js"></script>
+<script src="scripts/vendor/jquery.signalR-2.2.2.min.js"></script>
+<script src="signalr/hubs"></script>
+
+<script src="scripts/vendor/security/xss.js"></script>
+
+<script src="scripts/extensions.js"></script>
+<script src="scripts/security.js"></script>
+<script src="scripts/handler.js"></script>
+<script src="scripts/cryptochat.js"></script>
+
 </body>
 </html>

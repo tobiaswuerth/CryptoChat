@@ -1,100 +1,116 @@
 ﻿namespace ch.upzone.CryptoChat
 {
+    #region includes
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNet.SignalR;
 
+    #endregion
+
     public class CryptoChatHub : Hub
     {
         private static readonly IDictionary<String, User> ACTIVE_CONNECTIONS = new Dictionary<String, User>();
-
-        private static readonly List<String> INVALID_USERNAMES = new List<String>
-                                                                 {
-                                                                     "system",
-                                                                     ""
-                                                                 };
-
         private void SendError(String message) { Clients.Caller.error(message); }
 
         public void Init(String username, String room)
         {
-            username = username.Trim();
-            room = room.Trim();
-            if (INVALID_USERNAMES.Contains(username.ToLower()))
+            User u = GetCurrentUser();
+            if (null == u)
             {
-                SendError("Invalid username");
+                // new user
+                u = new User
+                    {
+                        Username = username,
+                        Room = room
+                    };
+                ACTIVE_CONNECTIONS[Context.ConnectionId] = u;
+                GetUsersInRoomByConnection()
+                        .ForEach(x => Clients.Client(x.Key)
+                                             .userJoined(u.Username));
                 return;
             }
 
-            Boolean isNew = false;
-            if (!ACTIVE_CONNECTIONS.ContainsKey(Context.ConnectionId) || null == ACTIVE_CONNECTIONS[Context.ConnectionId])
+            // existing user
+            if (!room.Equals(u.Room))
             {
-                // initialize
-                isNew = true;
-                ACTIVE_CONNECTIONS[Context.ConnectionId] = new User
-                                                           {
-                                                               Username = username,
-                                                               Room = room
-                                                           };
-            }
-            User u = ACTIVE_CONNECTIONS[Context.ConnectionId];
-            if (!isNew)
-            {
-                // re-init
-                if (!room.Equals(u.Room))
-                {
-                    // joined different room
-                    Send("System", u.Room, String.Format("User '{0}' has left the room", u.Username));
-                    u.Username = username;
-                    u.Room = room;
-                }
-                if (!u.Username.Equals(username))
-                {
-                    // username changed
-                    Send("System", room, String.Format("User '{0}' changed username to '{1}'", u.Username, username));
-                    u.Username = username;
-                    return;
-                }
+                // joined different room
+                GetUsersInRoomByConnection()
+                        .ForEach(x => Clients.Client(x.Key)
+                                             .userLeft(u.Username));
+                u.Username = username;
+                u.Room = room;
+                GetUsersInRoomByConnection()
+                        .ForEach(x => Clients.Client(x.Key)
+                                             .userJoined(u.Username));
+                return;
             }
 
-            Send("System", u.Room, String.Format("User '{0}' has joined the room", u.Username));
+            if (username.Equals(u.Username)) { return; }
+
+            // username changed
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .userRenamed(u.Username, username));
+            u.Username = username;
         }
 
-        private void Send(String username, String room, String message) { ACTIVE_CONNECTIONS.Where(x => null != x.Value).Where(x => x.Value.Room.Equals(room)).ToList().ForEach(x => Clients.Client(x.Key).getMessage(DateTime.Now.ToLongTimeString(), username, message)); }
-
-        public void Send(String message)
+        private User GetCurrentUser()
         {
-            User u = ACTIVE_CONNECTIONS[Context.ConnectionId];
-            Send(u.Username, u.Room, message);
+            return !ACTIVE_CONNECTIONS.ContainsKey(Context.ConnectionId)
+                ? null
+                : ACTIVE_CONNECTIONS[Context.ConnectionId];
+        }
+
+        private List<KeyValuePair<String, User>> GetUsersInRoomByConnection()
+        {
+            List<KeyValuePair<String, User>> users = new List<KeyValuePair<String, User>>();
+            User u = GetCurrentUser();
+            if (null == u) { return users; }
+
+            return ACTIVE_CONNECTIONS.Where(x => null != x.Value)
+                                     .Where(x => x.Value.Room.Equals(u.Room))
+                                     .ToList();
+        }
+
+        private void Send(User u, Object msg, Object msgIv)
+        {
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .getMessage(u.Username, msg, msgIv));
+        }
+
+        public void Send(Object msg, Object msgIv)
+        {
+            User u = GetCurrentUser();
+            if (null == u) { return; }
+
+            Send(u, msg, msgIv);
         }
 
         public override Task OnDisconnected(Boolean stopCalled)
         {
-            if (!ACTIVE_CONNECTIONS.ContainsKey(Context.ConnectionId))
-            {
-                return base.OnDisconnected(stopCalled);
-            }
+            User u = GetCurrentUser();
+            if (null == u) { return base.OnDisconnected(stopCalled); }
 
-            User u = ACTIVE_CONNECTIONS[Context.ConnectionId];
             ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
 
-            if (null == u)
-            {
-                return base.OnDisconnected(stopCalled);
-            }
-
             // was in a room
-            Send("System", u.Room, String.Format("User '{0}' has disconnected", u.Username));
-            Clients.All.broadcastMessage("System", String.Format("{0} disconnected", (Object) Clients.Caller.ToString()));
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .userLeft(u.Username));
             return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
-            ACTIVE_CONNECTIONS.Add(Context.ConnectionId, null);
-            Clients.All.broadcastMessage("System", String.Format("{0} reconnected", (Object) Clients.Caller.ToString()));
+            User u = GetCurrentUser();
+            if (null != u) { ACTIVE_CONNECTIONS.Remove(Context.ConnectionId); }
+
+            // request new init
+            Clients.Caller.initRequest();
             return base.OnReconnected();
         }
     }
