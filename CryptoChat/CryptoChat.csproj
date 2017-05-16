@@ -87,12 +87,22 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scripts\caller.js" />
-    <Content Include="scripts\cryptochat.js" />
-    <Content Include="scripts\extensions.js" />
-    <Content Include="scripts\handler.js" />
-    <Content Include="scripts\security.js" />
-    <Content Include="scripts\vendor\jquery-3.1.1.min.js" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="js\vendor\bootstrap.min.js" />
+    <Content Include="js\caller.js" />
+    <Content Include="js\cryptochat.js" />
+    <Content Include="js\extensions.js" />
+    <Content Include="js\handler.js" />
+    <Content Include="js\security.js" />
+    <Content Include="js\vendor\jquery-3.1.1.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="css\bootstrap.min.css.map" />
+    <Content Include="css\bootstrap-theme.min.css.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -103,18 +113,18 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="packages.config" />
-    <Content Include="scripts\vendor\jquery.signalR-2.2.2.min.js" />
-    <Content Include="scripts\vendor\security\aes-min.js" />
-    <Content Include="scripts\vendor\security\cipher-core-min.js" />
-    <Content Include="scripts\vendor\security\core-min.js" />
-    <Content Include="scripts\vendor\security\enc-base64-min.js" />
-    <Content Include="scripts\vendor\security\format-hex-min.js" />
-    <Content Include="scripts\vendor\security\hmac-min.js" />
-    <Content Include="scripts\vendor\security\mode-ctr-min.js" />
-    <Content Include="scripts\vendor\security\pbkdf2.js" />
-    <Content Include="scripts\vendor\security\sha3-min.js" />
-    <Content Include="scripts\vendor\security\x64-core-min.js" />
-    <Content Include="scripts\vendor\security\xss.js" />
+    <Content Include="js\vendor\jquery.signalR-2.2.2.min.js" />
+    <Content Include="js\vendor\security\aes-min.js" />
+    <Content Include="js\vendor\security\cipher-core-min.js" />
+    <Content Include="js\vendor\security\core-min.js" />
+    <Content Include="js\vendor\security\enc-base64-min.js" />
+    <Content Include="js\vendor\security\format-hex-min.js" />
+    <Content Include="js\vendor\security\hmac-min.js" />
+    <Content Include="js\vendor\security\mode-ctr-min.js" />
+    <Content Include="js\vendor\security\pbkdf2.js" />
+    <Content Include="js\vendor\security\sha3-min.js" />
+    <Content Include="js\vendor\security\x64-core-min.js" />
+    <Content Include="js\vendor\security\xss.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
