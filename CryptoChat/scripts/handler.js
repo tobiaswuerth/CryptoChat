@@ -36,3 +36,31 @@ const handleUserRenamed = function(before, after) {
     after = decrypt(after, DEFAULT_IV).toString(CryptoJS.enc.Utf8);
     insertNewMessage("System", `User '${before}' changed name to '${after}'`);
 };
+const handleConnectionStateChanged = function (state) {
+    switch(state.newState) {
+        case 0:
+            handleConnecting();
+            break;
+        case 1:
+            handleConnected();
+            break;
+        case 2:
+            handleReconnecting();
+            break;
+        case 4:
+            handleDisconnected();
+            break;
+    }
+}
+const handleConnected = function() {
+    console.log("State changed to connected");
+}
+const handleConnecting = function () {
+    console.log("State changed to connecting...");
+}
+const handleReconnecting = function () {
+    console.log("State changed to reconnecting...");
+}
+const handleDisconnected = function () {
+    console.log("State changed to disconnected");
+}

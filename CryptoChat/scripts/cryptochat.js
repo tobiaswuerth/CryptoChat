@@ -52,5 +52,6 @@ $(function() {
     chat.client.initRequest = handleInitRequest;
     chat.client.userRenamed = handleUserRenamed;
 
-    $.connection.hub.start().done(initialize);
+    $.connection.hub.stateChanged(handleConnectionStateChanged);
+    $.connection.hub.start({ waitForPageLoad: true }).done(initialize);
 });
