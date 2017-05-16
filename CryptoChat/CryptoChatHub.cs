@@ -18,9 +18,9 @@
         public Boolean ValidateUsername(String username, String room)
         {
             return !ACTIVE_CONNECTIONS.ToList()
-                                     .Where(x => null != x.Value)
-                                     .Where(x => x.Value.Room.Equals(room))
-                                     .Any(x => x.Value.Username.Equals(username));
+                                      .Where(x => null != x.Value)
+                                      .Where(x => x.Value.Room.Equals(room))
+                                      .Any(x => x.Value.Username.Equals(username));
         }
 
         public void Init(String username, String room)
@@ -121,9 +121,7 @@
             GetUsersInRoomByConnection()
                     .ForEach(x => Clients.Client(x.Key)
                                          .userLeft(u.Username));
-
             ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
-
             return base.OnDisconnected(stopCalled);
         }
 

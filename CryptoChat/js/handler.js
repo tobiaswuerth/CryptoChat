@@ -39,8 +39,8 @@ const handleUserRenamed = function(before, after) {
     insertNewMessage("System", `User '${before}' changed name to '${after}'`);
     Caller.requestUsersInRoom();
 };
-const handleConnectionStateChanged = function (state) {
-    switch(state.newState) {
+const handleConnectionStateChanged = function(state) {
+    switch (state.newState) {
         case 0:
             handleConnecting();
             break;
@@ -54,19 +54,19 @@ const handleConnectionStateChanged = function (state) {
             handleDisconnected();
             break;
     }
-}
+};
 const handleConnected = function() {
     console.log("State changed to connected");
-}
-const handleConnecting = function () {
+};
+const handleConnecting = function() {
     console.log("State changed to connecting...");
-}
-const handleReconnecting = function () {
+};
+const handleReconnecting = function() {
     console.log("State changed to reconnecting...");
-}
-const handleDisconnected = function () {
+};
+const handleDisconnected = function() {
     console.log("State changed to disconnected");
-}
-const handleGetUsersInRoom = function (data) {
+};
+const handleGetUsersInRoom = function(data) {
     data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
-}
+};
