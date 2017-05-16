@@ -17,14 +17,18 @@ const onBtnSendMessageClick = function() {
 };
 
 const onBtnJoinClick = function() {
-    const p = $("#txtPassword").val();
+    let p = $("#txtPassword").val();
     let r = $("#txtRoom").val().trim();
     let u = $("#txtUsername").val().trim();
 
     startKeyGeneration(p, r);
 
+    // hash inputs
+    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+
     u = encrypt(u, DEFAULT_IV);
-    r = encrypt(r, DEFAULT_IV);
+    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
 
     user = u.ciphertext.toString(CryptoJS.enc.Base64);
     room = r.ciphertext.toString(CryptoJS.enc.Base64);
