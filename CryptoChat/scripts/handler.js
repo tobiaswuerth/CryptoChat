@@ -23,18 +23,21 @@ const handleError = function(message) {
 const handleUserJoined = function(user) {
     user = decrypt(user, DEFAULT_IV).toString(CryptoJS.enc.Utf8);
     insertNewMessage("System", `User '${user}' joined the room`);
+    Caller.requestUsersInRoom();
 };
 const handleUserLeft = function(user) {
     user = decrypt(user, DEFAULT_IV).toString(CryptoJS.enc.Utf8);
     insertNewMessage("System", `User '${user}' left the room`);
+    Caller.requestUsersInRoom();
 };
 const handleInitRequest = function() {
-    chat.server.init(user, room);
+    Caller.init(user, room);
 };
 const handleUserRenamed = function(before, after) {
     before = decrypt(before, DEFAULT_IV).toString(CryptoJS.enc.Utf8);
     after = decrypt(after, DEFAULT_IV).toString(CryptoJS.enc.Utf8);
     insertNewMessage("System", `User '${before}' changed name to '${after}'`);
+    Caller.requestUsersInRoom();
 };
 const handleConnectionStateChanged = function (state) {
     switch(state.newState) {
@@ -63,4 +66,7 @@ const handleReconnecting = function () {
 }
 const handleDisconnected = function () {
     console.log("State changed to disconnected");
+}
+const handleGetUsersInRoom = function (data) {
+    data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
 }

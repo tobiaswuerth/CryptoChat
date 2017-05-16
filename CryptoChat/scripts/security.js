@@ -24,7 +24,8 @@ const startKeyGeneration = function(pass, room) {
     // calculate iterations for PBKDF2 based on password
     let iterations = stringToInt(hashPass);
     iterations = Math.abs(iterations);
-    iterations = iterations % 1000 + 4000; // between 4k and 5k iterations, based on password
+    //iterations = iterations % 1000 + 4000; // between 4k and 5k iterations, based on password
+    iterations = iterations % 5 + 1; // ONLY DEBUG!! TODO
     // start key generation with keyBase and use hashRoom as salt
     key = CryptoJS.PBKDF2(hashPass,
         hashRoom,

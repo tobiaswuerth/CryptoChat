@@ -12,7 +12,7 @@ const onBtnSendMessageClick = function() {
         return;
     }
     const msg = e.ciphertext.toString(CryptoJS.enc.Base64);
-    chat.server.send(msg, e.iv);
+    Caller.sendMessage(msg, e.iv);
     $("#txtMessage").val("").focus();
 };
 
@@ -33,7 +33,7 @@ const onBtnJoinClick = function() {
     user = u.ciphertext.toString(CryptoJS.enc.Base64);
     room = r.ciphertext.toString(CryptoJS.enc.Base64);
 
-    chat.server.init(user, room);
+    Caller.init(user, room);
 };
 
 const initialize = function() {
@@ -51,6 +51,7 @@ $(function() {
     chat.client.userLeft = handleUserLeft;
     chat.client.initRequest = handleInitRequest;
     chat.client.userRenamed = handleUserRenamed;
+    chat.client.getUsersInRoom = handleGetUsersInRoom;
 
     $.connection.hub.stateChanged(handleConnectionStateChanged);
     $.connection.hub.start({ waitForPageLoad: true }).done(initialize);

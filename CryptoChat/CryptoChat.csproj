@@ -87,6 +87,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\caller.js" />
     <Content Include="scripts\cryptochat.js" />
     <Content Include="scripts\extensions.js" />
     <Content Include="scripts\handler.js" />

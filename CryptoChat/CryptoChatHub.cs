@@ -15,11 +15,26 @@
         private static readonly IDictionary<String, User> ACTIVE_CONNECTIONS = new Dictionary<String, User>();
         private void SendError(String message) { Clients.Caller.error(message); }
 
+        public Boolean ValidateUsername(String username, String room)
+        {
+            return !ACTIVE_CONNECTIONS.ToList()
+                                     .Where(x => null != x.Value)
+                                     .Where(x => x.Value.Room.Equals(room))
+                                     .Any(x => x.Value.Username.Equals(username));
+        }
+
         public void Init(String username, String room)
         {
             User u = GetCurrentUser();
             if (null == u)
             {
+                if (!ValidateUsername(username, room))
+                {
+                    // username already taken
+                    SendError("Username already taken");
+                    return;
+                }
+
                 // new user
                 u = new User
                     {
@@ -51,6 +66,13 @@
             if (username.Equals(u.Username)) { return; }
 
             // username changed
+            if (!ValidateUsername(username, room))
+            {
+                // username already taken
+                SendError("Username already taken");
+                return;
+            }
+
             GetUsersInRoomByConnection()
                     .ForEach(x => Clients.Client(x.Key)
                                          .userRenamed(u.Username, username));
@@ -95,12 +117,13 @@
             User u = GetCurrentUser();
             if (null == u) { return base.OnDisconnected(stopCalled); }
 
-            ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
-
             // was in a room
             GetUsersInRoomByConnection()
                     .ForEach(x => Clients.Client(x.Key)
                                          .userLeft(u.Username));
+
+            ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
+
             return base.OnDisconnected(stopCalled);
         }
 
@@ -112,6 +135,12 @@
             // request new init
             Clients.Caller.initRequest();
             return base.OnReconnected();
+        }
+
+        public void RequestUsers()
+        {
+            List<KeyValuePair<String, User>> users = GetUsersInRoomByConnection();
+            Clients.Caller.getUsersInRoom(users.Select(x => x.Value.Username));
         }
     }
 }
