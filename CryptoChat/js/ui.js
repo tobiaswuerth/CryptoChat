@@ -16,8 +16,10 @@
     },
 
     onBtnJoinClick: function () {
-        $("#modal").modal("show");
-        $("#modalText").text("Generating Key...");
+        hide("divJoin");
+        show("divKeyGeneration");
+
+        $("#txtKeyGenerationAction").text("Generating Key...");
         
         let p = $("#txtPassword").val();
         let r = $("#txtRoom").val().trim();
@@ -28,12 +30,13 @@
            const data = d.data ||{};
             switch(data.type) {
                 case "status":
-                    $("#modalText").text(`Generating Key ${data.value}%/100%`);
+                    $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
+                    UserInterface.updateProgressbar(Math.floor(data.value));
                     break;
                 case "done":
                     key = JSON.parse(data.value);
 
-                    $("#modalText").text("Encrypting inputs...");
+                    $("#txtKeyGenerationAction").text("Encrypting inputs...");
 
                     // hash inputs
                     p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
@@ -45,11 +48,20 @@
                     user = u.ciphertext.toString(CryptoJS.enc.Base64);
                     room = r.ciphertext.toString(CryptoJS.enc.Base64);
 
-                    $("#modalText").text("Initializing...");
+                    $("#txtKeyGenerationAction").text("Initializing...");
                     Caller.init(user, room);
                     break;
             }
         }
         worker.postMessage({ cmd: "startKeyGeneration", param : { pass: p, room: r } });
+    },
+    updateProgressbar : function(percent) {
+        const $ppc = $(".progress-pie-chart");
+        const deg = 360 * percent / 100;
+        if (percent > 50) {
+            $ppc.addClass("gt-50");
+        }
+        $(".ppc-progress-fill").css("transform", `rotate(${deg}deg)`);
+        $(".ppc-percents span").html(percent + "%");
     }
 }

@@ -3,24 +3,29 @@
 <head>
     <title>CryptoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/reset.min.css" rel="stylesheet" />
+    <link href="css/progressbar.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="css/cryptochat.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p id="modalText"></p>
+    <div id="divKeyGeneration" class="text-center vcenter hide">
+        <h1 id="txtKeyGenerationAction"></h1>
+        <div class="progress-pie-chart">
+            <div class="ppc-progress">
+                <div class="ppc-progress-fill"></div>
+            </div>
+            <div class="ppc-percents">
+                <div class="pcc-percents-wrapper">
+                    <span>%</span>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="form-join vcenter" id="divJoin">
         <h1>
-            <img class="vtop" src="img/shield_h50.png" alt="logo" height="40" /> CryptoChat
+            <img class="vtop" src="img/shield_h50.png" alt="logo" height="41" /> CryptoChat
         </h1>
         <hr />
         <input type="text" class="box form-control input-lg" placeholder="Username" id="txtUsername">
@@ -56,8 +61,10 @@
 
     <script src="signalr/hubs"></script>
 
-    <script src="js/vendor/security/xss.js"></script>
+    <script src="js/vendor/prefixfree.min.js"></script>
+<script src="js/vendor/security/xss.js"></script>
 
+    <script src="js/helper.js"></script>
     <script src="js/instance.js"></script>
     <script src="js/security.js"></script>
     <script src="js/caller.js"></script>

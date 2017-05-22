@@ -72,7 +72,6 @@
                     .ForEach(x => Clients.Client(x.Key)
                                          .userJoined(u.Username));
             Clients.Caller.initSuccess();
-            return;
         }
 
         private void HandleNewUser(String username, String room, User u)

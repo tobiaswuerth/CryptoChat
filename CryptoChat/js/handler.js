@@ -71,9 +71,12 @@ const handleGetUsersInRoom = function(data) {
     data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
 };
 const handleInitSuccess = function () {
-    $("#modal").modal("hide");
+    hide("divKeyGeneration");
+    hide("divJoin");
+    show("divMessage");
 };
 const handleInitFailed = function (error) {
-    $("#modal").modal("hide");
+    hide("divKeyGeneration");
+    show("divJoin");
     alert(error);
 };

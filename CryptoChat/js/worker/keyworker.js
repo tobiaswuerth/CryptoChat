@@ -51,6 +51,5 @@ const onStartKeyGeneration = function (pass, room) {
         { keySize: 256 / 32, iterations: iterations, hasher: CryptoJS.algo.SHA3 },
         (percentageDone) => self.postMessage({ type: "status", value: percentageDone })
         );
-    console.log(key);
     self.postMessage({ type: "done", value: JSON.stringify(key)});
 };
