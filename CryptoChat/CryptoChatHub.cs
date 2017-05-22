@@ -12,12 +12,11 @@
 
     public class CryptoChatHub : Hub
     {
-        private static readonly IDictionary<String, User> ACTIVE_CONNECTIONS = new Dictionary<String, User>();
-        private void SendError(String message) { Clients.Caller.error(message); }
-
+        private static volatile IDictionary<String, User> _activeConnections = new Dictionary<String, User>();
+        
         public Boolean ValidateUsername(String username, String room)
         {
-            return !ACTIVE_CONNECTIONS.ToList()
+            return !_activeConnections.ToList()
                                       .Where(x => null != x.Value)
                                       .Where(x => x.Value.Room.Equals(room))
                                       .Any(x => x.Value.Username.Equals(username));
@@ -28,48 +27,29 @@
             User u = GetCurrentUser();
             if (null == u)
             {
-                if (!ValidateUsername(username, room))
-                {
-                    // username already taken
-                    SendError("Username already taken");
-                    return;
-                }
-
-                // new user
-                u = new User
-                    {
-                        Username = username,
-                        Room = room
-                    };
-                ACTIVE_CONNECTIONS[Context.ConnectionId] = u;
-                GetUsersInRoomByConnection()
-                        .ForEach(x => Clients.Client(x.Key)
-                                             .userJoined(u.Username));
+                HandleNewUser(username, room, u);
                 return;
             }
 
             // existing user
             if (!room.Equals(u.Room))
             {
-                // joined different room
-                GetUsersInRoomByConnection()
-                        .ForEach(x => Clients.Client(x.Key)
-                                             .userLeft(u.Username));
-                u.Username = username;
-                u.Room = room;
-                GetUsersInRoomByConnection()
-                        .ForEach(x => Clients.Client(x.Key)
-                                             .userJoined(u.Username));
+                HandleNewRoom(username, room, u);
                 return;
             }
 
             if (username.Equals(u.Username)) { return; }
 
+            HandleNewUsername(username, room, u);
+        }
+
+        private void HandleNewUsername(String username, String room, User u)
+        {
             // username changed
             if (!ValidateUsername(username, room))
             {
                 // username already taken
-                SendError("Username already taken");
+                Clients.Caller.initFailed("Username already taken");
                 return;
             }
 
@@ -77,13 +57,51 @@
                     .ForEach(x => Clients.Client(x.Key)
                                          .userRenamed(u.Username, username));
             u.Username = username;
+            Clients.Caller.initSuccess();
+        }
+
+        private void HandleNewRoom(String username, String room, User u)
+        {
+            // joined different room
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .userLeft(u.Username));
+            u.Username = username;
+            u.Room = room;
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .userJoined(u.Username));
+            Clients.Caller.initSuccess();
+            return;
+        }
+
+        private void HandleNewUser(String username, String room, User u)
+        {
+            if (!ValidateUsername(username, room))
+            {
+                // username already taken
+                Clients.Caller.initFailed("Username already taken");
+                return;
+            }
+
+            // new user
+            u = new User
+                {
+                    Username = username,
+                    Room = room
+                };
+            _activeConnections[Context.ConnectionId] = u;
+            GetUsersInRoomByConnection()
+                    .ForEach(x => Clients.Client(x.Key)
+                                         .userJoined(u.Username));
+            Clients.Caller.initSuccess();
         }
 
         private User GetCurrentUser()
         {
-            return !ACTIVE_CONNECTIONS.ContainsKey(Context.ConnectionId)
+            return !_activeConnections.ContainsKey(Context.ConnectionId)
                 ? null
-                : ACTIVE_CONNECTIONS[Context.ConnectionId];
+                : _activeConnections[Context.ConnectionId];
         }
 
         private List<KeyValuePair<String, User>> GetUsersInRoomByConnection()
@@ -92,7 +110,7 @@
             User u = GetCurrentUser();
             if (null == u) { return users; }
 
-            return ACTIVE_CONNECTIONS.Where(x => null != x.Value)
+            return _activeConnections.Where(x => null != x.Value)
                                      .Where(x => x.Value.Room.Equals(u.Room))
                                      .ToList();
         }
@@ -121,14 +139,14 @@
             GetUsersInRoomByConnection()
                     .ForEach(x => Clients.Client(x.Key)
                                          .userLeft(u.Username));
-            ACTIVE_CONNECTIONS.Remove(Context.ConnectionId);
+            _activeConnections.Remove(Context.ConnectionId);
             return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
             User u = GetCurrentUser();
-            if (null != u) { ACTIVE_CONNECTIONS.Remove(Context.ConnectionId); }
+            if (null != u) { _activeConnections.Remove(Context.ConnectionId); }
 
             // request new init
             Clients.Caller.initRequest();

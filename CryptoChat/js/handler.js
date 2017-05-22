@@ -70,3 +70,10 @@ const handleDisconnected = function() {
 const handleGetUsersInRoom = function(data) {
     data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
 };
+const handleInitSuccess = function () {
+    $("#modal").modal("hide");
+};
+const handleInitFailed = function (error) {
+    $("#modal").modal("hide");
+    alert(error);
+};

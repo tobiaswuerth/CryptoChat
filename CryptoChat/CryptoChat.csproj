@@ -89,11 +89,14 @@
   <ItemGroup>
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\cryptochat.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\shield_h50.png" />
+    <Content Include="js\instance.js" />
+    <Content Include="js\ui.js" />
     <Content Include="js\vendor\bootstrap.min.js" />
     <Content Include="js\caller.js" />
     <Content Include="js\cryptochat.js" />
-    <Content Include="js\extensions.js" />
     <Content Include="js\handler.js" />
     <Content Include="js\security.js" />
     <Content Include="js\vendor\jquery-3.1.1.min.js" />
@@ -112,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="js\worker\keyworker.js" />
     <Content Include="packages.config" />
     <Content Include="js\vendor\jquery.signalR-2.2.2.min.js" />
     <Content Include="js\vendor\security\aes-min.js" />

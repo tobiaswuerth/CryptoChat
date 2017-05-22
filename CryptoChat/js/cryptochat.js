@@ -1,47 +1,4 @@
-﻿let user;
-let room;
-let key;
-let chat;
-
-const DEFAULT_IV = CryptoJS.lib.WordArray.create("r6Dolxzt2G/c7yEQlgRXy+FbvEy9IzsElLTpkvHnDns=");
-
-const onBtnSendMessageClick = function() {
-    const e = encrypt($("#txtMessage").val().trim());
-    if (!e) {
-        // empty message
-        return;
-    }
-    const msg = e.ciphertext.toString(CryptoJS.enc.Base64);
-    Caller.sendMessage(msg, e.iv);
-    $("#txtMessage").val("").focus();
-};
-
-const onBtnJoinClick = function() {
-    let p = $("#txtPassword").val();
-    let r = $("#txtRoom").val().trim();
-    let u = $("#txtUsername").val().trim();
-
-    startKeyGeneration(p, r);
-
-    // hash inputs
-    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-
-    u = encrypt(u, DEFAULT_IV);
-    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
-
-    user = u.ciphertext.toString(CryptoJS.enc.Base64);
-    room = r.ciphertext.toString(CryptoJS.enc.Base64);
-
-    Caller.init(user, room);
-};
-
-const initialize = function() {
-    $("#btnSendMessage").click(onBtnSendMessageClick);
-    $("#btnJoin").click(onBtnJoinClick);
-};
-
-$(function() {
+﻿$(function() {
     // startup
     chat = $.connection.cryptoChatHub;
 
@@ -52,7 +9,9 @@ $(function() {
     chat.client.initRequest = handleInitRequest;
     chat.client.userRenamed = handleUserRenamed;
     chat.client.getUsersInRoom = handleGetUsersInRoom;
+    chat.client.initSuccess = handleInitSuccess;
+    chat.client.initFailed = handleInitFailed;
 
     $.connection.hub.stateChanged(handleConnectionStateChanged);
-    $.connection.hub.start({ waitForPageLoad: true }).done(initialize);
+    $.connection.hub.start({ waitForPageLoad: true }).done(UserInterface.initialize);
 });
