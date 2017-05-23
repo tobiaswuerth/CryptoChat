@@ -10,7 +10,7 @@
     "../vendor/security/mode-ctr-min.js"
 );
 
-const stringToInt = function (input) {
+const stringToInt = function(input) {
     let hash = 0;
     if (input.length === 0) {
         return hash;
@@ -21,10 +21,9 @@ const stringToInt = function (input) {
         hash = hash & hash; // Convert to 32bit integer
     }
     return hash;
-}
-
+};
 self.addEventListener("message",
-    function (d) {
+    function(d) {
         const data = d.data || {};
         data.cmd = data.cmd || {};
         switch (data.cmd) {
@@ -37,7 +36,7 @@ self.addEventListener("message",
         }
     },
     false);
-const onStartKeyGeneration = function (pass, room) {
+const onStartKeyGeneration = function(pass, room) {
     // hash inputes -> guarantees a certain length
     const hashPass = CryptoJS.SHA3(pass, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
     const hashRoom = CryptoJS.SHA3(room, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
@@ -50,6 +49,6 @@ const onStartKeyGeneration = function (pass, room) {
         hashRoom,
         { keySize: 256 / 32, iterations: iterations, hasher: CryptoJS.algo.SHA3 },
         (percentageDone) => self.postMessage({ type: "status", value: percentageDone })
-        );
-    self.postMessage({ type: "done", value: JSON.stringify(key)});
+    );
+    self.postMessage({ type: "done", value: JSON.stringify(key) });
 };

@@ -9,11 +9,11 @@ code.google.com/p/crypto-js/wiki/License
     var d = b.lib.CipherParams, c = b.enc.Hex;
     b.format.Hex = {
         stringify: function(a) {
-            return a.ciphertext.toString(c)
+            return a.ciphertext.toString(c);
         },
         parse: function(a) {
             a = c.parse(a);
-            return d.create({ ciphertext: a })
+            return d.create({ ciphertext: a });
         }
-    }
+    };
 })();

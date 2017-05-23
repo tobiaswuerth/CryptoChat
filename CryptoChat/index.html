@@ -3,13 +3,17 @@
 <head>
     <title>CryptoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/reset.min.css" rel="stylesheet" />
-    <link href="css/progressbar.css" rel="stylesheet" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="css/cryptochat.css" rel="stylesheet" />
+    <link href="css/reset.min.css" rel="stylesheet"/>
+    <link href="css/progressbar.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="css/cryptochat.css" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
+
     <div id="divKeyGeneration" class="text-center vcenter hide">
         <h1 id="txtKeyGenerationAction"></h1>
         <div class="progress-pie-chart">
@@ -23,14 +27,32 @@
             </div>
         </div>
     </div>
+
     <div class="form-join vcenter" id="divJoin">
         <h1>
-            <img class="vtop" src="img/shield_h50.png" alt="logo" height="41" /> CryptoChat
+            <img class="vtop" src="img/shield_h50.png" alt="logo" height="41"/> CryptoChat
         </h1>
-        <hr />
-        <input type="text" class="box form-control input-lg" placeholder="Username" id="txtUsername">
-        <input type="text" class="box form-control input-lg" placeholder="Room" id="txtRoom">
-        <input type="password" class="box form-control input-lg" placeholder="Password" id="txtPassword">
+        <hr/>
+
+        <div class="input-group box">
+            <span class="input-group-addon">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </span>
+            <input type="text" class=" form-control" placeholder="Username" id="txtUsername">
+        </div>
+        <div class="input-group box">
+            <span class="input-group-addon">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Room" id="txtRoom">
+        </div>
+        <div class="input-group box">
+            <span class="input-group-addon">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+            <input type="password" class=" form-control" placeholder="Password" id="txtPassword">
+        </div>
+
         <button class="btn btn-lg btn-success btn-block" type="submit" id="btnJoin">Join</button>
     </div>
     <div id="divMessage" class="hide">
@@ -44,32 +66,33 @@
         <ul id="discussion"></ul>
     </div>
 
-    <script src="js/vendor/security/core-min.js"></script>
-    <script src="js/vendor/security/x64-core-min.js"></script>
-    <script src="js/vendor/security/enc-base64-min.js"></script>
-    <script src="js/vendor/security/cipher-core-min.js"></script>
-    <script src="js/vendor/security/format-hex-min.js"></script>
-    <script src="js/vendor/security/hmac-min.js"></script>
-    <script src="js/vendor/security/sha3-min.js"></script>
-    <script src="js/vendor/security/pbkdf2.js"></script>
-    <script src="js/vendor/security/mode-ctr-min.js"></script>
-    <script src="js/vendor/security/aes-min.js"></script>
+</div>
+<script src="js/vendor/security/core-min.js"></script>
+<script src="js/vendor/security/x64-core-min.js"></script>
+<script src="js/vendor/security/enc-base64-min.js"></script>
+<script src="js/vendor/security/cipher-core-min.js"></script>
+<script src="js/vendor/security/format-hex-min.js"></script>
+<script src="js/vendor/security/hmac-min.js"></script>
+<script src="js/vendor/security/sha3-min.js"></script>
+<script src="js/vendor/security/pbkdf2.js"></script>
+<script src="js/vendor/security/mode-ctr-min.js"></script>
+<script src="js/vendor/security/aes-min.js"></script>
 
-    <script src="js/vendor/jquery-3.1.1.min.js"></script>
-    <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/jquery-3.1.1.min.js"></script>
+<script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
 
-    <script src="signalr/hubs"></script>
+<script src="signalr/hubs"></script>
 
-    <script src="js/vendor/prefixfree.min.js"></script>
+<script src="js/vendor/prefixfree.min.js"></script>
 <script src="js/vendor/security/xss.js"></script>
 
-    <script src="js/helper.js"></script>
-    <script src="js/instance.js"></script>
-    <script src="js/security.js"></script>
-    <script src="js/caller.js"></script>
-    <script src="js/handler.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/cryptochat.js"></script>
+<script src="js/helper.js"></script>
+<script src="js/instance.js"></script>
+<script src="js/security.js"></script>
+<script src="js/caller.js"></script>
+<script src="js/handler.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cryptochat.js"></script>
 </body>
 </html>

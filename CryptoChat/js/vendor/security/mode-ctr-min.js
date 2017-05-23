@@ -17,10 +17,10 @@ CryptoJS.mode.CTR = function() {
             a.encryptBlock(c, 0);
             d[e - 1] = d[e - 1] + 1 | 0;
             for (a = 0; a < e; a++) {
-                b[f + a] ^= c[a]
+                b[f + a] ^= c[a];
             }
         }
     });
     b.Decryptor = g;
-    return b
+    return b;
 }();

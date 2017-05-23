@@ -16,35 +16,35 @@ var CryptoJS = CryptoJS ||
                     a && b.mixIn(a);
                     b.hasOwnProperty("init") ||
                     (b.init = function() {
-                        b.$super.init.apply(this, arguments)
+                        b.$super.init.apply(this, arguments);
                     });
                     b.init.prototype = b;
                     b.$super = this;
-                    return b
+                    return b;
                 },
                 create: function() {
                     const a = this.extend();
                     a.init.apply(a, arguments);
-                    return a
+                    return a;
                 },
                 init: function() {},
                 mixIn: function(a) {
                     for (let b in a) {
                         a.hasOwnProperty(b) && (this[b] = a[b]);
                     }
-                    a.hasOwnProperty("toString") && (this.toString = a.toString)
+                    a.hasOwnProperty("toString") && (this.toString = a.toString);
                 },
                 clone: function() {
-                    return this.init.prototype.extend(this)
+                    return this.init.prototype.extend(this);
                 }
             },
             j = l.WordArray = f.extend({
                 init: function(a, b) {
                     a = this.words = a || [];
-                    this.sigBytes = b != r ? b : 4 * a.length
+                    this.sigBytes = b != r ? b : 4 * a.length;
                 },
                 toString: function(a) {
-                    return(a || s).stringify(this)
+                    return(a || s).stringify(this);
                 },
                 concat: function(a) {
                     const b = this.words;
@@ -64,25 +64,25 @@ var CryptoJS = CryptoJS ||
                         b.push.apply(b, d);
                     }
                     this.sigBytes += a;
-                    return this
+                    return this;
                 },
                 clamp: function() {
                     const a = this.words;
                     const b = this.sigBytes;
                     a[b >>> 2] &= 4294967295 <<
                         32 - 8 * (b % 4);
-                    a.length = h.ceil(b / 4)
+                    a.length = h.ceil(b / 4);
                 },
                 clone: function() {
                     const a = f.clone.call(this);
                     a.words = this.words.slice(0);
-                    return a
+                    return a;
                 },
                 random: function(a) {
                     for (var b = [], d = 0; d < a; d += 4) {
                         b.push(4294967296 * h.random() | 0);
                     }
-                    return new j.init(b, a)
+                    return new j.init(b, a);
                 }
             });
         const m = k.enc = {};
@@ -93,9 +93,9 @@ var CryptoJS = CryptoJS ||
                     for (var d = [], c = 0; c < a; c++) {
                         const e = b[c >>> 2] >>> 24 - 8 * (c % 4) & 255;
                         d.push((e >>> 4).toString(16));
-                        d.push((e & 15).toString(16))
+                        d.push((e & 15).toString(16));
                     }
-                    return d.join("")
+                    return d.join("");
                 },
                 parse: function(a) {
                     for (var b = a.length, d = [], c = 0; c < b; c += 2) {
@@ -104,7 +104,7 @@ var CryptoJS = CryptoJS ||
                                 16) <<
                             24 - 4 * (c % 8);
                     }
-                    return new j.init(d, b / 2)
+                    return new j.init(d, b / 2);
                 }
             },
             p = m.Latin1 = {
@@ -114,36 +114,36 @@ var CryptoJS = CryptoJS ||
                     for (var d = [], c = 0; c < a; c++) {
                         d.push(String.fromCharCode(b[c >>> 2] >>> 24 - 8 * (c % 4) & 255));
                     }
-                    return d.join("")
+                    return d.join("");
                 },
                 parse: function(a) {
                     for (var b = a.length, d = [], c = 0; c < b; c++) {
                         d[c >>> 2] |= (a.charCodeAt(c) & 255) << 24 - 8 * (c % 4);
                     }
-                    return new j.init(d, b)
+                    return new j.init(d, b);
                 }
             },
             t = m.Utf8 = {
                 stringify: function(a) {
                     try {
-                        return decodeURIComponent(escape(p.stringify(a)))
+                        return decodeURIComponent(escape(p.stringify(a)));
                     } catch (b) {
                         throw Error("Malformed UTF-8 data");
                     }
                 },
                 parse: function(a) {
-                    return p.parse(unescape(encodeURIComponent(a)))
+                    return p.parse(unescape(encodeURIComponent(a)));
                 }
             },
             q = l.BufferedBlockAlgorithm = f.extend({
                 reset: function() {
                     this._data = new j.init;
-                    this._nDataBytes = 0
+                    this._nDataBytes = 0;
                 },
                 _append: function(a) {
                     "string" == typeof a && (a = t.parse(a));
                     this._data.concat(a);
-                    this._nDataBytes += a.sigBytes
+                    this._nDataBytes += a.sigBytes;
                 },
                 _process: function(a) {
                     const b = this._data;
@@ -159,14 +159,14 @@ var CryptoJS = CryptoJS ||
                             this._doProcessBlock(d, g);
                         }
                         g = d.splice(0, a);
-                        b.sigBytes -= c
+                        b.sigBytes -= c;
                     }
-                    return new j.init(g, c)
+                    return new j.init(g, c);
                 },
                 clone: function() {
                     const a = f.clone.call(this);
                     a._data = this._data.clone();
-                    return a
+                    return a;
                 },
                 _minBufferSize: 0
             });
@@ -174,34 +174,34 @@ var CryptoJS = CryptoJS ||
             cfg: f.extend(),
             init: function(a) {
                 this.cfg = this.cfg.extend(a);
-                this.reset()
+                this.reset();
             },
             reset: function() {
                 q.reset.call(this);
-                this._doReset()
+                this._doReset();
             },
             update: function(a) {
                 this._append(a);
                 this._process();
-                return this
+                return this;
             },
             finalize: function(a) {
                 a && this._append(a);
-                return this._doFinalize()
+                return this._doFinalize();
             },
             blockSize: 16,
             _createHelper: function(a) {
                 return function(b, d) {
-                    return(new a.init(d)).finalize(b)
-                }
+                    return(new a.init(d)).finalize(b);
+                };
             },
             _createHmacHelper: function(a) {
                 return function(b, d) {
                     return(new u.HMAC.init(a,
-                        d)).finalize(b)
-                }
+                        d)).finalize(b);
+                };
             }
         });
         var u = k.algo = {};
-        return k
+        return k;
     }(Math);

@@ -13,27 +13,27 @@ code.google.com/p/crypto-js/wiki/License
     a.Word = e.extend({
         init: function(b, c) {
             this.high = b;
-            this.low = c
+            this.low = c;
         }
     });
     a.WordArray = e.extend({
         init: function(b, c) {
             b = this.words = b || [];
-            this.sigBytes = c != g ? c : 8 * b.length
+            this.sigBytes = c != g ? c : 8 * b.length;
         },
         toX32: function() {
             for (var b = this.words, c = b.length, a = [], d = 0; d < c; d++) {
                 const e = b[d];
                 a.push(e.high);
-                a.push(e.low)
+                a.push(e.low);
             }
-            return h.create(a, this.sigBytes)
+            return h.create(a, this.sigBytes);
         },
         clone: function() {
             for (var b = e.clone.call(this), c = b.words = this.words.slice(0), a = c.length, d = 0; d < a; d++) {
                 c[d] = c[d].clone();
             }
-            return b
+            return b;
         }
-    })
+    });
 })();

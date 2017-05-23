@@ -22,7 +22,7 @@ code.google.com/p/crypto-js/wiki/License
         u[f] = b << 16 | b >>> 16;
         v[f] = b << 8 | b >>> 24;
         w[f] = b;
-        n ? (n = t ^ g[g[g[E ^ t]]], l ^= g[g[l]]) : n = l = 1
+        n ? (n = t ^ g[g[g[E ^ t]]], l ^= g[g[l]]) : n = l = 1;
     }
     var F = [
             0, 1, 2, 4, 8,
@@ -36,7 +36,7 @@ code.google.com/p/crypto-js/wiki/License
                     } else {
                         var d = b[h - 1];
                         h % a ? 6 < a && 4 == h % a && (d = j[d >>> 24] << 24 | j[d >>> 16 & 255] << 16 | j[d >>> 8 & 255] << 8 | j[d & 255]) : (d = d << 8 | d >>> 24, d = j[d >>> 24] << 24 | j[d >>> 16 & 255] << 16 | j[d >>> 8 & 255] << 8 | j[d & 255], d ^= F[h / a | 0] << 24);
-                        b[h] = b[h - a] ^ d
+                        b[h] = b[h - a] ^ d;
                     }
                 }
                 e = this._invKeySchedule = [];
@@ -48,11 +48,11 @@ code.google.com/p/crypto-js/wiki/License
                                                                    v[j[d >>>
                                                                        8 &
                                                                        255]] ^
-                                                                   w[j[d & 255]]
+                                                                   w[j[d & 255]];
                 }
             },
             encryptBlock: function(c, e) {
-                this._doCryptBlock(c, e, this._keySchedule, z, A, B, C, j)
+                this._doCryptBlock(c, e, this._keySchedule, z, A, B, C, j);
             },
             decryptBlock: function(c, e) {
                 var a = c[e + 1];
@@ -61,7 +61,7 @@ code.google.com/p/crypto-js/wiki/License
                 this._doCryptBlock(c, e, this._invKeySchedule, s, u, v, w, y);
                 a = c[e + 1];
                 c[e + 1] = c[e + 3];
-                c[e + 3] = a
+                c[e + 3] = a;
             },
             _doCryptBlock: function(c, e, a, b, h, d, j, m) {
                 for (var n = this._nRounds, f = c[e] ^ a[0], g = c[e + 1] ^ a[1], k = c[e + 2] ^ a[2], p = c[e + 3] ^ a[3], l = 4, t = 1; t < n; t++) {
@@ -81,9 +81,9 @@ code.google.com/p/crypto-js/wiki/License
                 c[e] = q;
                 c[e + 1] = r;
                 c[e + 2] = s;
-                c[e + 3] = p
+                c[e + 3] = p;
             },
             keySize: 8
         });
-    q.AES = x._createHelper(r)
+    q.AES = x._createHelper(r);
 })();

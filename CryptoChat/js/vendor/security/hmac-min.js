@@ -19,22 +19,22 @@ code.google.com/p/crypto-js/wiki/License
                 h[d] ^= 1549556828, j[d] ^= 909522486;
             }
             f.sigBytes = g.sigBytes = e;
-            this.reset()
+            this.reset();
         },
         reset: function() {
             const a = this._hasher;
             a.reset();
-            a.update(this._iKey)
+            a.update(this._iKey);
         },
         update: function(a) {
             this._hasher.update(a);
-            return this
+            return this;
         },
         finalize: function(a) {
             const b = this._hasher;
             a = b.finalize(a);
             b.reset();
-            return b.finalize(this._oKey.clone().concat(a))
+            return b.finalize(this._oKey.clone().concat(a));
         }
-    })
+    });
 })();

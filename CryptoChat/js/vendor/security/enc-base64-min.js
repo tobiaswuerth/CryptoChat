@@ -24,7 +24,7 @@ code.google.com/p/crypto-js/wiki/License
                     b.push(e);
                 }
             }
-            return b.join("")
+            return b.join("");
         },
         parse: function(b) {
             var e = b.length;
@@ -39,11 +39,11 @@ code.google.com/p/crypto-js/wiki/License
                     const g = f.indexOf(b.charAt(d - 1)) << 2 * (d % 4);
                     const h = f.indexOf(b.charAt(d)) >>> 6 - 2 * (d % 4);
                     c[a >>> 2] |= (g | h) << 24 - 8 * (a % 4);
-                    a++
+                    a++;
                 }
             }
-            return j.create(c, a)
+            return j.create(c, a);
         },
         _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-    }
+    };
 })();

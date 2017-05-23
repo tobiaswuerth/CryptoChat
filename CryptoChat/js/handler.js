@@ -70,12 +70,12 @@ const handleDisconnected = function() {
 const handleGetUsersInRoom = function(data) {
     data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
 };
-const handleInitSuccess = function () {
+const handleInitSuccess = function() {
     hide("divKeyGeneration");
     hide("divJoin");
     show("divMessage");
 };
-const handleInitFailed = function (error) {
+const handleInitFailed = function(error) {
     hide("divKeyGeneration");
     show("divJoin");
     alert(error);

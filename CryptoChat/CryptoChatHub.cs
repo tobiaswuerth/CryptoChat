@@ -13,7 +13,7 @@
     public class CryptoChatHub : Hub
     {
         private static volatile IDictionary<String, User> _activeConnections = new Dictionary<String, User>();
-        
+
         public Boolean ValidateUsername(String username, String room)
         {
             return !_activeConnections.ToList()

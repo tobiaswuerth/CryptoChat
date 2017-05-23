@@ -1,10 +1,10 @@
 ﻿const UserInterface = {
-    initialize: function () {
+    initialize: function() {
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnJoin").click(UserInterface.onBtnJoinClick);
     },
 
-    onBtnSendMessageClick: function () {
+    onBtnSendMessageClick: function() {
         const e = encrypt($("#txtMessage").val().trim());
         if (!e) {
             // empty message
@@ -15,20 +15,20 @@
         $("#txtMessage").val("").focus();
     },
 
-    onBtnJoinClick: function () {
+    onBtnJoinClick: function() {
         hide("divJoin");
         show("divKeyGeneration");
 
         $("#txtKeyGenerationAction").text("Generating Key...");
-        
+
         let p = $("#txtPassword").val();
         let r = $("#txtRoom").val().trim();
         let u = $("#txtUsername").val().trim();
 
         const worker = new Worker("js/worker/keyworker.js");
-        worker.onmessage = function (d) {
-           const data = d.data ||{};
-            switch(data.type) {
+        worker.onmessage = function(d) {
+            const data = d.data || {};
+            switch (data.type) {
                 case "status":
                     $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
                     UserInterface.updateProgressbar(Math.floor(data.value));
@@ -52,10 +52,10 @@
                     Caller.init(user, room);
                     break;
             }
-        }
-        worker.postMessage({ cmd: "startKeyGeneration", param : { pass: p, room: r } });
+        };
+        worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
     },
-    updateProgressbar : function(percent) {
+    updateProgressbar: function(percent) {
         const $ppc = $(".progress-pie-chart");
         const deg = 360 * percent / 100;
         if (percent > 50) {
