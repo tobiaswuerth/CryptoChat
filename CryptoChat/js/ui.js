@@ -1,7 +1,9 @@
 ﻿const UserInterface = {
-    initialize: function() {
+    initialize: function () {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnJoin").click(UserInterface.onBtnJoinClick);
+        $("#btnShowHideUserList").click(UserInterface.onBtnShowHideUserListClick);
     },
 
     onBtnSendMessageClick: function() {
@@ -63,5 +65,20 @@
         }
         $(".ppc-progress-fill").css("transform", `rotate(${deg}deg)`);
         $(".ppc-percents span").html(percent + "%");
+    },
+    onBtnShowHideUserListClick: function() {
+        if ($("#divUserList").is(':visible')) {
+            hide("divUserList");
+            setTimeout(function () {
+                replaceClass("divConversation", "col-xl-9", "col-xl-12");
+                replaceClass("divConversation", "col-lg-9", "col-lg-12");
+                replaceClass("divConversation", "col-md-9", "col-md-12");
+            }, 200);
+        } else {
+            show("divUserList");
+            replaceClass("divConversation", "col-xl-12", "col-xl-9");
+            replaceClass("divConversation", "col-lg-12", "col-lg-9");
+            replaceClass("divConversation", "col-md-12", "col-md-9");
+        }
     }
 }

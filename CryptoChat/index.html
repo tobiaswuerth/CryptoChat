@@ -3,96 +3,146 @@
 <head>
     <title>CryptoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
     <link href="css/reset.min.css" rel="stylesheet"/>
     <link href="css/progressbar.css" rel="stylesheet"/>
+    <link href="css/tether.min.css" rel="stylesheet"/>
+    <link href="css/tether-theme-arrows-dark.min.css" rel="stylesheet"/>
+    <link href="css/tether-theme-arrows.min.css" rel="stylesheet"/>
+    <link href="css/tether-theme-basic.min.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
     <link href="css/font-awesome.min.css" rel="stylesheet"/>
     <link href="css/cryptochat.css" rel="stylesheet"/>
+
+    <script src="js/vendor/security/core-min.js"></script>
+    <script src="js/vendor/security/x64-core-min.js"></script>
+    <script src="js/vendor/security/enc-base64-min.js"></script>
+    <script src="js/vendor/security/cipher-core-min.js"></script>
+    <script src="js/vendor/security/format-hex-min.js"></script>
+    <script src="js/vendor/security/hmac-min.js"></script>
+    <script src="js/vendor/security/sha3-min.js"></script>
+    <script src="js/vendor/security/pbkdf2.js"></script>
+    <script src="js/vendor/security/mode-ctr-min.js"></script>
+    <script src="js/vendor/security/aes-min.js"></script>
+
+    <script src="js/vendor/jquery-3.1.1.min.js"></script>
+    <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
+    <script src="js/vendor/tether.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/vendor/prefixfree.min.js"></script>
+    <script src="js/vendor/security/xss.js"></script>
 </head>
 <body>
-<div class="container">
 
-    <div id="divKeyGeneration" class="text-center vcenter hide">
-        <h1 id="txtKeyGenerationAction"></h1>
-        <div class="progress-pie-chart">
-            <div class="ppc-progress">
-                <div class="ppc-progress-fill"></div>
-            </div>
-            <div class="ppc-percents">
-                <div class="pcc-percents-wrapper">
-                    <span>%</span>
+<div id="divKeyGeneration" class="cover hide">
+    <div class="center">
+        <div>
+            <h1 id="txtKeyGenerationAction">Loading...</h1>
+            <div class="progress-pie-chart">
+                <div class="ppc-progress">
+                    <div class="ppc-progress-fill"></div>
+                </div>
+                <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                        <span>0%</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="form-join vcenter" id="divJoin">
-        <h1>
-            <img class="vtop" src="img/shield_h50.png" alt="logo" height="41"/> CryptoChat
-        </h1>
-        <hr/>
-
-        <div class="input-group box">
-            <span class="input-group-addon">
-                <i class="fa fa-user" aria-hidden="true"></i>
-            </span>
-            <input type="text" class=" form-control" placeholder="Username" id="txtUsername">
-        </div>
-        <div class="input-group box">
-            <span class="input-group-addon">
-                <i class="fa fa-users" aria-hidden="true"></i>
-            </span>
-            <input type="text" class="form-control" placeholder="Room" id="txtRoom">
-        </div>
-        <div class="input-group box">
-            <span class="input-group-addon">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-            </span>
-            <input type="password" class=" form-control" placeholder="Password" id="txtPassword">
-        </div>
-
-        <button class="btn btn-lg btn-success btn-block" type="submit" id="btnJoin">Join</button>
-    </div>
-    <div id="divMessage" class="hide">
-        <div class="input-group">
-            <input type="text" class="form-control input-lg" placeholder="Message" id="txtMessage">
-            <span class="input-group-btn">
-                <button class="btn btn-lg btn-success" type="submit" id="btnSendMessage">Send</button>
-            </span>
-        </div>
-
-        <ul id="discussion"></ul>
-    </div>
-
 </div>
-<script src="js/vendor/security/core-min.js"></script>
-<script src="js/vendor/security/x64-core-min.js"></script>
-<script src="js/vendor/security/enc-base64-min.js"></script>
-<script src="js/vendor/security/cipher-core-min.js"></script>
-<script src="js/vendor/security/format-hex-min.js"></script>
-<script src="js/vendor/security/hmac-min.js"></script>
-<script src="js/vendor/security/sha3-min.js"></script>
-<script src="js/vendor/security/pbkdf2.js"></script>
-<script src="js/vendor/security/mode-ctr-min.js"></script>
-<script src="js/vendor/security/aes-min.js"></script>
 
-<script src="js/vendor/jquery-3.1.1.min.js"></script>
-<script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
+<div id="divJoin" class="cover">
+    <div class="center">
+        <div>
+            <h1>
+                <img class="vtop" src="img/shield_h50.png" alt="logo" height="41"/> CryptoChat
+            </h1>
+            <hr/>
 
-<script src="signalr/hubs"></script>
+            <div class="input-group box row">
+                <span class="input-group-addon col-2">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="col-10 form-control" placeholder="Username" id="txtUsername">
+            </div>
+            <div class="input-group box row">
+                <span class="input-group-addon col-2">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="col-10 form-control" placeholder="Room" id="txtRoom">
+            </div>
+            <div class="input-group box row">
+                <span class="input-group-addon col-2">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </span>
+                <input type="password" class="col-10 form-control" placeholder="Password" id="txtPassword">
+            </div>
 
-<script src="js/vendor/prefixfree.min.js"></script>
-<script src="js/vendor/security/xss.js"></script>
+            <button class="btn btn-lg btn-success btn-block" type="submit" id="btnJoin">Join</button>
+        </div>
+    </div>
+</div>
 
-<script src="js/helper.js"></script>
-<script src="js/instance.js"></script>
-<script src="js/security.js"></script>
-<script src="js/caller.js"></script>
-<script src="js/handler.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/cryptochat.js"></script>
+<div id="divConversationControls" class="hide">
+    <div class="content no-margin no-padding">
+        <div class="row fill no-margin no-padding">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 shadow" id="divUserList">
+                <br/>
+                <h3>Users</h3>
+                <hr/>
+                <ul id="users" class="list-group">
+                    None
+                </ul>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12 shadow" id="divConversation">
+                <ul id="chat" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer row shadow">
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 no-margin no-padding">
+            <div class="fill btn-group-vertical">
+                <button id="btnShowHideUserList" class="btn btn-lg btn-outline-success no-padding" data-toggle="tooltip" title="Show/Hide user list" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <button id="btnSettings" class="btn btn-lg btn-outline-success no-padding" data-toggle="tooltip" title="Settings" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </button>
+                <button id="btnLeaveRoom" class="btn btn-lg btn-outline-success no-padding" data-toggle="tooltip" title="Leave room" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-8 col-8 no-margin no-padding">
+            <div class="input-group fill">
+                <textarea type="text" class="form-control fill" placeholder="Message" id="txtMessage"></textarea>
+            </div>
+        </div>
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 no-margin no-padding">
+            <button class="btn btn-success fill no-padding" type="submit" id="btnSendMessage" data-toggle="tooltip" title="Send Message" data-placement="left" data-delay='{"show":"500"}'>
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i><br/>
+                Send
+            </button>
+        </div>
+    </div>
+</div>
+
+<span class="hide">
+    <script src="signalr/hubs"></script>
+
+    <script src="js/helper.js"></script>
+    <script src="js/instance.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/caller.js"></script>
+    <script src="js/handler.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/cryptochat.js"></script>
+</span>
 </body>
 </html>

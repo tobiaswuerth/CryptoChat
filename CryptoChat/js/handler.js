@@ -6,7 +6,6 @@
     insertNewMessage(usr, msg);
 };
 const insertNewMessage = function(user, message) {
-    const d = new Date();
     message = filterXSS(message,
         {
             whiteList: [], // empty, means filter out all tags
@@ -14,7 +13,16 @@ const insertNewMessage = function(user, message) {
             stripIgnoreTagBody: ["script"] // the script tag is a special case, we need
             // to filter out its content
         });
-    $("#discussion").append(`<li>[${d.toLocaleTimeString()}] <strong>${user}</strong> : ${message}</li>`);
+    
+    const entry = $("<li>");
+    entry.addClass("list-group-item");
+    entry.append(`[${new Date().toLocaleTimeString()}] `); // date
+    const u = $("<strong>");
+    u.text(user);
+    entry.append(u);
+    entry.append(" : ");
+    entry.append(message);
+    $("#chat").append(entry);
 };
 const handleError = function(message) {
     alert(message);
@@ -67,13 +75,21 @@ const handleReconnecting = function() {
 const handleDisconnected = function() {
     console.log("State changed to disconnected");
 };
-const handleGetUsersInRoom = function(data) {
-    data.forEach(x => console.log(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8)));
+const handleGetUsersInRoom = function (data) {
+    let list = $("#users");
+    list.empty();
+
+    data.forEach(x => {
+        let entry = $("<li>");
+        entry.addClass("list-group-item");
+        entry.text(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8));
+        list.append(entry);
+    });
 };
 const handleInitSuccess = function() {
     hide("divKeyGeneration");
     hide("divJoin");
-    show("divMessage");
+    show("divConversationControls");
 };
 const handleInitFailed = function(error) {
     hide("divKeyGeneration");

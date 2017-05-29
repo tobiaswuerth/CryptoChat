@@ -109,7 +109,7 @@
             User u = GetCurrentUser();
             if (null == u) { return users; }
 
-            return _activeConnections.Where(x => null != x.Value)
+            return _activeConnections.Where(x => null != x.Value?.Room)
                                      .Where(x => x.Value.Room.Equals(u.Room))
                                      .ToList();
         }

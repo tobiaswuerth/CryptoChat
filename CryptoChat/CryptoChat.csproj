@@ -94,8 +94,13 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\progressbar.css" />
     <Content Include="css\reset.min.css" />
+    <Content Include="css\tether-theme-arrows-dark.min.css" />
+    <Content Include="css\tether-theme-arrows.min.css" />
+    <Content Include="css\tether-theme-basic.min.css" />
+    <Content Include="css\tether.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\favicon.ico" />
     <Content Include="img\shield_h50.png" />
     <Content Include="js\helper.js" />
     <Content Include="js\instance.js" />
@@ -128,6 +133,7 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="js\vendor\prefixfree.min.js" />
+    <Content Include="js\vendor\tether.min.js" />
     <Content Include="js\worker\keyworker.js" />
     <Content Include="packages.config" />
     <Content Include="js\vendor\jquery.signalR-2.2.2.min.js" />
