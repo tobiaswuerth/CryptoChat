@@ -250,7 +250,8 @@
                 var REGEXP_ATTR_VALUE_COLON = /&colon;?/img;
                 var REGEXP_ATTR_VALUE_NEWLINE = /&newline;?/img;
                 const REGEXP_DEFAULT_ON_TAG_ATTR_3 = /\/\*|\*\//mg;
-                var REGEXP_DEFAULT_ON_TAG_ATTR_4 = /((j\s*a\s*v\s*a|v\s*b|l\s*i\s*v\s*e)\s*s\s*c\s*r\s*i\s*p\s*t\s*|m\s*o\s*c\s*h\s*a)\:/ig;
+                var REGEXP_DEFAULT_ON_TAG_ATTR_4 =
+                    /((j\s*a\s*v\s*a|v\s*b|l\s*i\s*v\s*e)\s*s\s*c\s*r\s*i\s*p\s*t\s*|m\s*o\s*c\s*h\s*a)\:/ig;
                 const REGEXP_DEFAULT_ON_TAG_ATTR_5 = /^[\s"'`]*(d\s*a\s*t\s*a\s*)\:/ig;
                 const REGEXP_DEFAULT_ON_TAG_ATTR_6 = /^[\s"'`]*(d\s*a\s*t\s*a\s*)\:\s*image\//ig;
                 var REGEXP_DEFAULT_ON_TAG_ATTR_7 = /e\s*x\s*p\s*r\s*e\s*s\s*s\s*i\s*o\s*n\s*\(.*/ig;
@@ -286,8 +287,8 @@
                     return str.replace(REGEXP_ATTR_VALUE_1,
                         function replaceUnicode(str, code) {
                             return (code[0] === "x" || code[0] === "X")
-                                       ? String.fromCharCode(parseInt(code.substr(1), 16))
-                                       : String.fromCharCode(parseInt(code, 10));
+                                ? String.fromCharCode(parseInt(code.substr(1), 16))
+                                : String.fromCharCode(parseInt(code, 10));
                         });
                 }
 
@@ -877,7 +878,8 @@
 
                     if (options.stripIgnoreTag) {
                         if (options.onIgnoreTag) {
-                            console.error('Notes: cannot use these two options "stripIgnoreTag" and "onIgnoreTag" at the same time');
+                            console.error(
+                                'Notes: cannot use these two options "stripIgnoreTag" and "onIgnoreTag" at the same time');
                         }
                         options.onIgnoreTag = DEFAULT.onIgnoreTagStripAll;
                     }
@@ -1493,7 +1495,7 @@
                     whiteList["word-spacing"] = true; // default: normal
                     whiteList["word-wrap"] = true; // default: normal
                     whiteList["wrap-flow"] = false; // default: auto
-                    whiteList["wrap-through"] = false; // default: wrap
+                    whiteList["wrap-through"] = false; // default: infinityloadWrap
                     whiteList["writing-mode"] = false; // default: horizontal-tb
                     whiteList["z-index"] = false; // default: auto
 

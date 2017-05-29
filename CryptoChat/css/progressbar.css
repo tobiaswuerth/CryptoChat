@@ -4,7 +4,6 @@
     height: 200px;
     position: relative;
     width: 200px;
-    margin: 25px auto 0 0 ;
 }
 
 .progress-pie-chart.gt-50 { background-color: #81CE97; }

@@ -1,26 +1,19 @@
 ﻿html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
-    width: 100%;
-    min-width: 100%;
+    max-height: 100%;
     max-width: 100%;
     min-height: 100%;
-    max-height: 100%;
-    overflow: hidden;
+    min-width: 100%;
+    padding: 0;
+    width: 100%;
 }
 
-.vtop {
-    vertical-align: top
-}
+.vtop { vertical-align: top }
 
-.hide {
-    display: none;
-}
+.hide { display: none; }
 
-.show {
-    display: block;
-}
+.show { display: block; }
 
 .box {
     margin-bottom: 5px;
@@ -30,66 +23,73 @@
 }
 
 .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 90px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
+
 .shadow {
     box-shadow: 0px 0px 2px #000000;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3)
 }
 
 .footer {
-    width: 100%;
+    bottom: 0;
+    left: 0;
     margin: 0;
     padding: 5px;
     position: fixed;
-    bottom: 0;
-    left: 0;
     right: 0;
+    width: 100%;
 }
 
-.no-margin {
-    margin: 0;
-}
+.no-margin { margin: 0; }
 
-.no-padding {
-    padding: 0;
-}
+.no-padding { padding: 0; }
+
+#divKeyGeneration { z-index: 10; }
+
+#divConnectionState { z-index: 20; }
 
 .cover {
     background-color: #ffffff; /* fallback */
     background-color: rgba(255, 255, 255, .5);
     height: 100%;
+    overflow: hidden;
+    position: absolute;
     width: 100%;
 }
 
 .center {
-    -o-justify-content: center;
-    -webkit-justify-content: center;
     -ms-align-items: center;
     -o-align-items: center;
+    -o-justify-content: center;
     -webkit-align-items: center;
+    -webkit-justify-content: center;
     align-items: center;
     display: flex;
     height: 100%;
     justify-content: center;
+    justify-items: column;
     text-align: center;
 }
 
+.justify {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .fill {
-    width: 100%;
     height: 100%;
     min-height: 100%;
     min-width: 100%;
+    width: 100%;
 }
 
-.t1 {
-    background-color: aqua;
-}
+.t1 { background-color: aqua; }
 
-.t2 {
-    background-color: brown;
-}
+.t2 { background-color: brown; }

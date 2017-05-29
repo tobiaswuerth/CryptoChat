@@ -5,7 +5,23 @@ code.google.com/p/crypto-js
 code.google.com/p/crypto-js/wiki/License
 */
 (function() {
-    for (var q = CryptoJS, x = q.lib.BlockCipher, r = q.algo, j = [], y = [], z = [], A = [], B = [], C = [], s = [], u = [], v = [], w = [], g = [], k = 0; 256 > k; k++) {
+    for (var q = CryptoJS,
+        x = q.lib.BlockCipher,
+        r = q.algo,
+        j = [],
+        y = [],
+        z = [],
+        A = [],
+        B = [],
+        C = [],
+        s = [],
+        u = [],
+        v = [],
+        w = [],
+        g = [],
+        k = 0;
+        256 > k;
+        k++) {
         g[k] = 128 > k ? k << 1 : k << 1 ^ 283;
     }
     for (var n = 0, l = 0, k = 0; 256 > k; k++) {
@@ -30,25 +46,39 @@ code.google.com/p/crypto-js/wiki/License
         ],
         r = r.AES = x.extend({
             _doReset: function() {
-                for (var c = this._key, e = c.words, a = c.sigBytes / 4, c = 4 * ((this._nRounds = a + 6) + 1), b = this._keySchedule = [], h = 0; h < c; h++) {
+                for (var c = this._key,
+                    e = c.words,
+                    a = c.sigBytes / 4,
+                    c = 4 * ((this._nRounds = a + 6) + 1),
+                    b = this._keySchedule = [],
+                    h = 0;
+                    h < c;
+                    h++) {
                     if (h < a) {
                         b[h] = e[h];
                     } else {
                         var d = b[h - 1];
-                        h % a ? 6 < a && 4 == h % a && (d = j[d >>> 24] << 24 | j[d >>> 16 & 255] << 16 | j[d >>> 8 & 255] << 8 | j[d & 255]) : (d = d << 8 | d >>> 24, d = j[d >>> 24] << 24 | j[d >>> 16 & 255] << 16 | j[d >>> 8 & 255] << 8 | j[d & 255], d ^= F[h / a | 0] << 24);
+                        h % a
+                            ? 6 < a &&
+                            4 == h % a &&
+                            (d = j[d >>> 24] << 24 | j[d >>> 16 & 255] << 16 | j[d >>> 8 & 255] << 8 | j[d & 255])
+                            : (d = d << 8 | d >>> 24, d = j[d >>> 24] << 24 |
+                                j[d >>> 16 & 255] << 16 |
+                                j[d >>> 8 & 255] << 8 |
+                                j[d & 255], d ^= F[h / a | 0] << 24);
                         b[h] = b[h - a] ^ d;
                     }
                 }
                 e = this._invKeySchedule = [];
                 for (a = 0; a < c; a++) {
                     h = c - a, d = a % 4 ? b[h] : b[h - 4], e[a] = 4 > a || 4 >= h
-                                                                   ? d
-                                                                   : s[j[d >>> 24]] ^
-                                                                   u[j[d >>> 16 & 255]] ^
-                                                                   v[j[d >>>
-                                                                       8 &
-                                                                       255]] ^
-                                                                   w[j[d & 255]];
+                        ? d
+                        : s[j[d >>> 24]] ^
+                        u[j[d >>> 16 & 255]] ^
+                        v[j[d >>>
+                            8 &
+                            255]] ^
+                        w[j[d & 255]];
                 }
             },
             encryptBlock: function(c, e) {
@@ -64,7 +94,15 @@ code.google.com/p/crypto-js/wiki/License
                 c[e + 3] = a;
             },
             _doCryptBlock: function(c, e, a, b, h, d, j, m) {
-                for (var n = this._nRounds, f = c[e] ^ a[0], g = c[e + 1] ^ a[1], k = c[e + 2] ^ a[2], p = c[e + 3] ^ a[3], l = 4, t = 1; t < n; t++) {
+                for (var n = this._nRounds,
+                    f = c[e] ^ a[0],
+                    g = c[e + 1] ^ a[1],
+                    k = c[e + 2] ^ a[2],
+                    p = c[e + 3] ^ a[3],
+                    l = 4,
+                    t = 1;
+                    t < n;
+                    t++) {
                     var q = b[f >>> 24] ^ h[g >>> 16 & 255] ^ d[k >>> 8 & 255] ^ j[p & 255] ^ a[l++],
                         r = b[g >>> 24] ^ h[k >>> 16 & 255] ^ d[p >>> 8 & 255] ^ j[f & 255] ^ a[l++],
                         s =

@@ -13,7 +13,7 @@ const insertNewMessage = function(user, message) {
             stripIgnoreTagBody: ["script"] // the script tag is a special case, we need
             // to filter out its content
         });
-    
+
     const entry = $("<li>");
     entry.addClass("list-group-item");
     entry.append(`[${new Date().toLocaleTimeString()}] `); // date
@@ -49,18 +49,18 @@ const handleUserRenamed = function(before, after) {
 };
 const handleConnectionStateChanged = function(state) {
     switch (state.newState) {
-        case 0:
-            handleConnecting();
-            break;
-        case 1:
-            handleConnected();
-            break;
-        case 2:
-            handleReconnecting();
-            break;
-        case 4:
-            handleDisconnected();
-            break;
+    case 0:
+        handleConnecting();
+        break;
+    case 1:
+        handleConnected();
+        break;
+    case 2:
+        handleReconnecting();
+        break;
+    case 4:
+        handleDisconnected();
+        break;
     }
 };
 const handleConnected = function() {
@@ -75,12 +75,12 @@ const handleReconnecting = function() {
 const handleDisconnected = function() {
     console.log("State changed to disconnected");
 };
-const handleGetUsersInRoom = function (data) {
-    let list = $("#users");
+const handleGetUsersInRoom = function(data) {
+    const list = $("#users");
     list.empty();
 
     data.forEach(x => {
-        let entry = $("<li>");
+        const entry = $("<li>");
         entry.addClass("list-group-item");
         entry.text(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8));
         list.append(entry);

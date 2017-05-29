@@ -92,6 +92,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\cryptochat.css" />
     <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\infinityloading.css" />
     <Content Include="css\progressbar.css" />
     <Content Include="css\reset.min.css" />
     <Content Include="css\tether-theme-arrows-dark.min.css" />

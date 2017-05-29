@@ -5,7 +5,20 @@ code.google.com/p/crypto-js
 code.google.com/p/crypto-js/wiki/License
 */
 (function(y) {
-    for (var p = CryptoJS, m = p.lib, z = m.WordArray, q = m.Hasher, s = p.x64.Word, m = p.algo, v = [], w = [], x = [], c = 1, d = 0, l = 0; 24 > l; l++) {
+    for (var p = CryptoJS,
+        m = p.lib,
+        z = m.WordArray,
+        q = m.Hasher,
+        s = p.x64.Word,
+        m = p.algo,
+        v = [],
+        w = [],
+        x = [],
+        c = 1,
+        d = 0,
+        l = 0;
+        24 > l;
+        l++) {
         v[c + 5 * d] = (l + 1) * (l + 2) / 2 % 64;
         var r = (2 * c + 3 * d) % 5, c = d % 5, d = r;
     }
@@ -42,7 +55,11 @@ code.google.com/p/crypto-js/wiki/License
         },
         _doProcessBlock: function(c, n) {
             for (var h = this._state, d = this.blockSize / 2, b = 0; b < d; b++) {
-                var e = c[n + 2 * b], f = c[n + 2 * b + 1], e = (e << 8 | e >>> 24) & 16711935 | (e << 24 | e >>> 8) & 4278255360, f = (f << 8 | f >>> 24) & 16711935 | (f << 24 | f >>> 8) & 4278255360, a = h[b];
+                var e = c[n + 2 * b],
+                    f = c[n + 2 * b + 1],
+                    e = (e << 8 | e >>> 24) & 16711935 | (e << 24 | e >>> 8) & 4278255360,
+                    f = (f << 8 | f >>> 24) & 16711935 | (f << 24 | f >>> 8) & 4278255360,
+                    a = h[b];
                 a.high ^= f;
                 a.low ^= e;
             }
@@ -68,7 +85,11 @@ code.google.com/p/crypto-js/wiki/License
                     }
                 }
                 for (f = 1; 25 > f; f++) {
-                    a = h[f], b = a.high, a = a.low, g = v[f], 32 > g ? (e = b << g | a >>> 32 - g, k = a << g | b >>> 32 - g) : (e = a << g - 32 | b >>> 64 - g, k = b << g - 32 | a >>> 64 - g), a = j[w[f]], a.high = e, a.low = k;
+                    a = h[f], b = a.high, a = a.low, g =
+                        v[f], 32 > g
+                        ? (e = b << g | a >>> 32 - g, k = a << g | b >>> 32 - g)
+                        : (e = a << g - 32 | b >>> 64 - g, k = b << g - 32 | a >>> 64 - g), a = j[w[f]], a.high =
+                        e, a.low = k;
                 }
                 a = j[0];
                 b = h[0];
@@ -76,7 +97,8 @@ code.google.com/p/crypto-js/wiki/License
                 a.low = b.low;
                 for (b = 0; 5 > b; b++) {
                     for (g = 0; 5 > g; g++) {
-                        f = b + 5 * g, a = h[f], e = j[f], f = j[(b + 1) % 5 + 5 * g], k = j[(b + 2) % 5 + 5 * g], a.high = e.high ^ ~f.high & k.high, a.low = e.low ^ ~f.low & k.low;
+                        f = b + 5 * g, a = h[f], e = j[f], f = j[(b + 1) % 5 + 5 * g], k =
+                            j[(b + 2) % 5 + 5 * g], a.high = e.high ^ ~f.high & k.high, a.low = e.low ^ ~f.low & k.low;
                     }
                 }
                 a = h[0];
@@ -95,7 +117,11 @@ code.google.com/p/crypto-js/wiki/License
             c.sigBytes = 4 * d.length;
             this._process();
             for (var c = this._state, d = this.cfg.outputLength / 8, h = d / 8, j = [], b = 0; b < h; b++) {
-                var e = c[b], f = e.high, e = e.low, f = (f << 8 | f >>> 24) & 16711935 | (f << 24 | f >>> 8) & 4278255360, e = (e << 8 | e >>> 24) & 16711935 | (e << 24 | e >>> 8) & 4278255360;
+                var e = c[b],
+                    f = e.high,
+                    e = e.low,
+                    f = (f << 8 | f >>> 24) & 16711935 | (f << 24 | f >>> 8) & 4278255360,
+                    e = (e << 8 | e >>> 24) & 16711935 | (e << 24 | e >>> 8) & 4278255360;
                 j.push(e);
                 j.push(f);
             }

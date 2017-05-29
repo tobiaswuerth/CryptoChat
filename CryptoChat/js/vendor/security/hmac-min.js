@@ -15,7 +15,9 @@ code.google.com/p/crypto-js/wiki/License
             const e = 4 * c;
             b.sigBytes > e && (b = a.finalize(b));
             b.clamp();
-            for (var f = this._oKey = b.clone(), g = this._iKey = b.clone(), h = f.words, j = g.words, d = 0; d < c; d++) {
+            for (var f = this._oKey = b.clone(), g = this._iKey = b.clone(), h = f.words, j = g.words, d = 0;
+                d < c;
+                d++) {
                 h[d] ^= 1549556828, j[d] ^= 909522486;
             }
             f.sigBytes = g.sigBytes = e;

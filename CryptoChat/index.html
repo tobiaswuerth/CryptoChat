@@ -7,6 +7,7 @@
 
     <link href="css/reset.min.css" rel="stylesheet"/>
     <link href="css/progressbar.css" rel="stylesheet"/>
+    <link href="css/infinityloading.css" rel="stylesheet"/>
     <link href="css/tether.min.css" rel="stylesheet"/>
     <link href="css/tether-theme-arrows-dark.min.css" rel="stylesheet"/>
     <link href="css/tether-theme-arrows.min.css" rel="stylesheet"/>
@@ -37,11 +38,11 @@
     <script src="js/vendor/security/xss.js"></script>
 </head>
 <body>
-
 <div id="divKeyGeneration" class="cover hide">
     <div class="center">
-        <div>
+        <div class="justify">
             <h1 id="txtKeyGenerationAction">Loading...</h1>
+
             <div class="progress-pie-chart">
                 <div class="ppc-progress">
                     <div class="ppc-progress-fill"></div>
@@ -55,7 +56,25 @@
         </div>
     </div>
 </div>
-
+<div id="divConnectionState" class="cover">
+    <div class="center">
+        <div class="justify">
+            <div class="infinityLoadHeader">
+                <h1>
+                    Lost Connection!<br/>
+                    <small>Trying to reconnect...</small>
+                </h1>
+            </div>
+            <div class="infinityloadWrap">
+                <h1>!</h1>
+                <div class="infinityloadLoader"></div>
+                <div class="infinityloadLoaderbefore"></div>
+                <div class="infinityloadCircular"></div>
+                <div class="infinityloadCircular infinityloadAnother"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="divJoin" class="cover">
     <div class="center">
         <div>
@@ -121,7 +140,7 @@
         </div>
         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-8 col-8 no-margin no-padding">
             <div class="input-group fill">
-                <textarea type="text" class="form-control fill" placeholder="Message" id="txtMessage"></textarea>
+                <textarea class="form-control fill" placeholder="Message" id="txtMessage"></textarea>
             </div>
         </div>
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 no-margin no-padding">

@@ -106,7 +106,9 @@ CryptoJS.lib.Cipher ||
         m = m.CBC = h;
         h = (g.pad = {}).Pkcs7 = {
             pad: function(a, b) {
-                for (var c = 4 * b, c = c - a.sigBytes % c, d = c << 24 | c << 16 | c << 8 | c, e = [], f = 0; f < c; f += 4) {
+                for (var c = 4 * b, c = c - a.sigBytes % c, d = c << 24 | c << 16 | c << 8 | c, e = [], f = 0;
+                    f < c;
+                    f += 4) {
                     e.push(d);
                 }
                 c = l.create(e, c);
@@ -209,9 +211,9 @@ CryptoJS.lib.Cipher ||
             s = f.PasswordBasedCipher = j.extend({
                 cfg: j.cfg.extend({ kdf: g }),
                 encrypt: function(a,
-                                  b,
-                                  c,
-                                  d) {
+                    b,
+                    c,
+                    d) {
                     d = this.cfg.extend(d);
                     c = d.kdf.execute(c, a.keySize, a.ivSize);
                     d.iv = c.iv;

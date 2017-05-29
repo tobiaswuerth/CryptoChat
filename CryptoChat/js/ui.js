@@ -1,6 +1,6 @@
 ﻿const UserInterface = {
-    initialize: function () {
-        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    initialize: function() {
+        $("body").tooltip({ selector: "[data-toggle=tooltip]" });
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnJoin").click(UserInterface.onBtnJoinClick);
         $("#btnShowHideUserList").click(UserInterface.onBtnShowHideUserListClick);
@@ -31,28 +31,28 @@
         worker.onmessage = function(d) {
             const data = d.data || {};
             switch (data.type) {
-                case "status":
-                    $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
-                    UserInterface.updateProgressbar(Math.floor(data.value));
-                    break;
-                case "done":
-                    key = JSON.parse(data.value);
+            case "status":
+                $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
+                UserInterface.updateProgressbar(Math.floor(data.value));
+                break;
+            case "done":
+                key = JSON.parse(data.value);
 
-                    $("#txtKeyGenerationAction").text("Encrypting inputs...");
+                $("#txtKeyGenerationAction").text("Encrypting inputs...");
 
-                    // hash inputs
-                    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-                    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                // hash inputs
+                p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
 
-                    u = encrypt(u, DEFAULT_IV);
-                    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
+                u = encrypt(u, DEFAULT_IV);
+                r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
 
-                    user = u.ciphertext.toString(CryptoJS.enc.Base64);
-                    room = r.ciphertext.toString(CryptoJS.enc.Base64);
+                user = u.ciphertext.toString(CryptoJS.enc.Base64);
+                room = r.ciphertext.toString(CryptoJS.enc.Base64);
 
-                    $("#txtKeyGenerationAction").text("Initializing...");
-                    Caller.init(user, room);
-                    break;
+                $("#txtKeyGenerationAction").text("Initializing...");
+                Caller.init(user, room);
+                break;
             }
         };
         worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
@@ -67,13 +67,14 @@
         $(".ppc-percents span").html(percent + "%");
     },
     onBtnShowHideUserListClick: function() {
-        if ($("#divUserList").is(':visible')) {
+        if ($("#divUserList").is(":visible")) {
             hide("divUserList");
-            setTimeout(function () {
-                replaceClass("divConversation", "col-xl-9", "col-xl-12");
-                replaceClass("divConversation", "col-lg-9", "col-lg-12");
-                replaceClass("divConversation", "col-md-9", "col-md-12");
-            }, 200);
+            setTimeout(function() {
+                    replaceClass("divConversation", "col-xl-9", "col-xl-12");
+                    replaceClass("divConversation", "col-lg-9", "col-lg-12");
+                    replaceClass("divConversation", "col-md-9", "col-md-12");
+                },
+                200);
         } else {
             show("divUserList");
             replaceClass("divConversation", "col-xl-12", "col-xl-9");
