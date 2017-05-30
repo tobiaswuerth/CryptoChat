@@ -15,16 +15,26 @@ const replaceClass = function(id, from, to) {
     obj.removeClass(from);
     obj.addClass(to);
 };
-const showTooltipIf = function(id, func) {
+let tooltipTimeout = null;
+const showTooltipIf = function(id, target, func) {
     const obj = $(`#${id}`);
+    const t = $(`#${target}`);
     if (func(obj)) {
-        obj.tooltip("show");
+        clearTimeout(tooltipTimeout);
+        t.tooltip("show");
+        tooltipTimeout = setTimeout(function() {
+                t.tooltip("hide");
+            },
+            1000);
     } else {
-        obj.tooltip("hide");
+        t.tooltip("hide");
     }
 };
 const removeTooltip = function(obj) {
     obj.tooltip("dispose");
+};
+const removePopover = function(obj) {
+    obj.popover("dispose");
 };
 const inputfieldToFailedStateIf = function(id, target, func) {
     if (!func($(`#${id}`))) {

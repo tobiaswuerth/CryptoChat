@@ -49,18 +49,18 @@ const handleUserRenamed = function(before, after) {
 };
 const handleConnectionStateChanged = function(state) {
     switch (state.newState) {
-        case 0:
-            handleConnecting();
-            break;
-        case 1:
-            handleConnected();
-            break;
-        case 2:
-            handleReconnecting();
-            break;
-        case 4:
-            handleDisconnected();
-            break;
+    case 0:
+        handleConnecting();
+        break;
+    case 1:
+        handleConnected();
+        break;
+    case 2:
+        handleReconnecting();
+        break;
+    case 4:
+        handleDisconnected();
+        break;
     }
 };
 const handleConnected = function() {

@@ -211,9 +211,9 @@ CryptoJS.lib.Cipher ||
             s = f.PasswordBasedCipher = j.extend({
                 cfg: j.cfg.extend({ kdf: g }),
                 encrypt: function(a,
-                                  b,
-                                  c,
-                                  d) {
+                    b,
+                    c,
+                    d) {
                     d = this.cfg.extend(d);
                     c = d.kdf.execute(c, a.keySize, a.ivSize);
                     d.iv = c.iv;

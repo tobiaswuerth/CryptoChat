@@ -12,6 +12,5 @@
     chat.client.initSuccess = handleInitSuccess;
     chat.client.initFailed = handleInitFailed;
 
-    $.connection.hub.stateChanged(handleConnectionStateChanged);
     $.connection.hub.start({ waitForPageLoad: true }).done(UserInterface.initialize);
 });

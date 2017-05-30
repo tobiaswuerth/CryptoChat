@@ -87,8 +87,8 @@ code.google.com/p/crypto-js/wiki/License
                 for (f = 1; 25 > f; f++) {
                     a = h[f], b = a.high, a = a.low, g =
                         v[f], 32 > g
-                                  ? (e = b << g | a >>> 32 - g, k = a << g | b >>> 32 - g)
-                                  : (e = a << g - 32 | b >>> 64 - g, k = b << g - 32 | a >>> 64 - g), a = j[w[f]], a.high =
+                        ? (e = b << g | a >>> 32 - g, k = a << g | b >>> 32 - g)
+                        : (e = a << g - 32 | b >>> 64 - g, k = b << g - 32 | a >>> 64 - g), a = j[w[f]], a.high =
                         e, a.low = k;
                 }
                 a = j[0];
