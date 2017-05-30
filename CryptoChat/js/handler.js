@@ -49,31 +49,32 @@ const handleUserRenamed = function(before, after) {
 };
 const handleConnectionStateChanged = function(state) {
     switch (state.newState) {
-    case 0:
-        handleConnecting();
-        break;
-    case 1:
-        handleConnected();
-        break;
-    case 2:
-        handleReconnecting();
-        break;
-    case 4:
-        handleDisconnected();
-        break;
+        case 0:
+            handleConnecting();
+            break;
+        case 1:
+            handleConnected();
+            break;
+        case 2:
+            handleReconnecting();
+            break;
+        case 4:
+            handleDisconnected();
+            break;
     }
 };
 const handleConnected = function() {
-    console.log("State changed to connected");
+    hide("divReconnecting");
 };
 const handleConnecting = function() {
-    console.log("State changed to connecting...");
+    show("divReconnecting");
 };
 const handleReconnecting = function() {
-    console.log("State changed to reconnecting...");
+    show("divReconnecting");
 };
 const handleDisconnected = function() {
-    console.log("State changed to disconnected");
+    show("divReconnecting");
+    $.connection.hub.start();
 };
 const handleGetUsersInRoom = function(data) {
     const list = $("#users");

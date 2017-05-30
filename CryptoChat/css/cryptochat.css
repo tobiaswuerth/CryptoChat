@@ -51,11 +51,11 @@
 
 #divKeyGeneration { z-index: 10; }
 
-#divConnectionState { z-index: 20; }
+#divReconnecting { z-index: 20; }
 
 .cover {
     background-color: #ffffff; /* fallback */
-    background-color: rgba(255, 255, 255, .5);
+    background-color: rgba(255, 255, 255, .75);
     height: 100%;
     overflow: hidden;
     position: absolute;

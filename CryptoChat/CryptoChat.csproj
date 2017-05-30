@@ -124,6 +124,7 @@
     <Content Include="css\bootstrap-grid.min.css.map" />
     <Content Include="css\bootstrap-reboot.min.css.map" />
     <Content Include="css\bootstrap.min.css.map" />
+    <Content Include="js\vendor\security\zxcvbn.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -134,6 +135,7 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="js\vendor\prefixfree.min.js" />
+    <Content Include="js\vendor\security\zxcvbn.js" />
     <Content Include="js\vendor\tether.min.js" />
     <Content Include="js\worker\keyworker.js" />
     <Content Include="packages.config" />

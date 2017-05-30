@@ -27,12 +27,12 @@ self.addEventListener("message",
         const data = d.data || {};
         data.cmd = data.cmd || {};
         switch (data.cmd) {
-        case "startKeyGeneration":
-            data.param = data.param || {};
-            data.param.pass = data.param.pass || "";
-            data.param.room = data.param.room || "";
-            onStartKeyGeneration(data.param.pass, data.param.room);
-            break;
+            case "startKeyGeneration":
+                data.param = data.param || {};
+                data.param.pass = data.param.pass || "";
+                data.param.room = data.param.room || "";
+                onStartKeyGeneration(data.param.pass, data.param.room);
+                break;
         }
     },
     false);

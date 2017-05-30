@@ -17,25 +17,6 @@
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
     <link href="css/font-awesome.min.css" rel="stylesheet"/>
     <link href="css/cryptochat.css" rel="stylesheet"/>
-
-    <script src="js/vendor/security/core-min.js"></script>
-    <script src="js/vendor/security/x64-core-min.js"></script>
-    <script src="js/vendor/security/enc-base64-min.js"></script>
-    <script src="js/vendor/security/cipher-core-min.js"></script>
-    <script src="js/vendor/security/format-hex-min.js"></script>
-    <script src="js/vendor/security/hmac-min.js"></script>
-    <script src="js/vendor/security/sha3-min.js"></script>
-    <script src="js/vendor/security/pbkdf2.js"></script>
-    <script src="js/vendor/security/mode-ctr-min.js"></script>
-    <script src="js/vendor/security/aes-min.js"></script>
-
-    <script src="js/vendor/jquery-3.1.1.min.js"></script>
-    <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
-    <script src="js/vendor/tether.min.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-
-    <script src="js/vendor/prefixfree.min.js"></script>
-    <script src="js/vendor/security/xss.js"></script>
 </head>
 <body>
 <div id="divKeyGeneration" class="cover hide">
@@ -56,14 +37,17 @@
         </div>
     </div>
 </div>
-<div id="divConnectionState" class="cover">
+<div id="divReconnecting" class="cover">
     <div class="center">
         <div class="justify">
             <div class="infinityLoadHeader">
                 <h1>
-                    Lost Connection!<br/>
-                    <small>Trying to reconnect...</small>
+                    No connection to the server!<br/>
+                    <small>
+                        Trying to connect...
+                    </small>
                 </h1>
+                <p>Messages which are sent now will not be visible to you</p>
             </div>
             <div class="infinityloadWrap">
                 <h1>!</h1>
@@ -83,26 +67,34 @@
             </h1>
             <hr/>
 
-            <div class="input-group box row">
+            <div class="input-group box row" id="rowUsername">
                 <span class="input-group-addon col-2">
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="col-10 form-control" placeholder="Username" id="txtUsername">
+                <input type="text" class="col-10 form-control" placeholder="Username" id="txtUsername" data-toggle="tooltip">
             </div>
-            <div class="input-group box row">
+            <div class="input-group box row" id="rowRoom">
                 <span class="input-group-addon col-2">
                     <i class="fa fa-users" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="col-10 form-control" placeholder="Room" id="txtRoom">
+                <input type="text" class="col-10 form-control" placeholder="Room" id="txtRoom" data-toggle="tooltip">
             </div>
-            <div class="input-group box row">
+            <div class="input-group box row" id="rowPassword">
                 <span class="input-group-addon col-2">
                     <i class="fa fa-lock" aria-hidden="true"></i>
                 </span>
-                <input type="password" class="col-10 form-control" placeholder="Password" id="txtPassword">
+                <input type="password" class="col-10 form-control" placeholder="Password" id="txtPassword" data-toggle="tooltip">
+                <div class="passwordStrengthMeterWrapper">
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                    <small>weak</small>
+                </div>
             </div>
 
-            <button class="btn btn-lg btn-success btn-block" type="submit" id="btnJoin">Join</button>
+            <button class="btn btn-lg btn-success btn-block disabled" type="submit" id="btnJoin">Join</button>
         </div>
     </div>
 </div>
@@ -153,6 +145,26 @@
 </div>
 
 <span class="hide">
+    <script src="js/vendor/security/core-min.js"></script>
+    <script src="js/vendor/security/x64-core-min.js"></script>
+    <script src="js/vendor/security/enc-base64-min.js"></script>
+    <script src="js/vendor/security/cipher-core-min.js"></script>
+    <script src="js/vendor/security/format-hex-min.js"></script>
+    <script src="js/vendor/security/hmac-min.js"></script>
+    <script src="js/vendor/security/sha3-min.js"></script>
+    <script src="js/vendor/security/pbkdf2.js"></script>
+    <script src="js/vendor/security/mode-ctr-min.js"></script>
+    <script src="js/vendor/security/aes-min.js"></script>
+
+    <script src="js/vendor/jquery-3.1.1.min.js"></script>
+    <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
+    <script src="js/vendor/tether.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/vendor/prefixfree.min.js"></script>
+    <script src="js/vendor/security/xss.js"></script>
+    <script src="js/vendor/security/zxcvbn.js"></script>
+
     <script src="signalr/hubs"></script>
 
     <script src="js/helper.js"></script>

@@ -1,11 +1,52 @@
 ﻿const UserInterface = {
     initialize: function() {
-        $("body").tooltip({ selector: "[data-toggle=tooltip]" });
+        $("[data-toggle='tooltip']").tooltip();
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnJoin").click(UserInterface.onBtnJoinClick);
         $("#btnShowHideUserList").click(UserInterface.onBtnShowHideUserListClick);
-    },
 
+        const txtPass = $("#txtPassword");
+        const txtRoom = $("#txtRoom");
+        const txtUsername = $("#txtUsername");
+
+        txtPass.keyup(UserInterface.onTxtPasswordKeyUp);
+        txtRoom.keyup(UserInterface.onTxtRoomKeyUp);
+        txtUsername.keyup(UserInterface.onTxtUsernameKeyUp);
+
+        removeTooltip(txtPass);
+        removeTooltip(txtRoom);
+        removeTooltip(txtUsername);
+
+        txtPass.tooltip({ title: "Input cannot be empty", placement: "right", trigger: "manual", html: false, animation: true });
+        txtRoom.tooltip({ title: "Input cannot be empty", placement: "right", trigger: "manual", html: false, animation: true });
+        txtUsername.tooltip({ title: "Input cannot be empty", placement: "right", trigger: "manual", html: false, animation: true });
+    },
+    onTxtPasswordKeyUp: function(event) {
+        UserInterface.updateInputField(event, "Password");
+    },
+    onTxtRoomKeyUp: function(event) {
+        UserInterface.updateInputField(event, "Room");
+    },
+    onTxtUsernameKeyUp: function(event) {
+        UserInterface.updateInputField(event, "Username");
+    },
+    updateInputField: function(event, identifier) {
+        if (event.keyCode === 9) {
+            // ignore tab
+            return;
+        }
+        showTooltipIf(`txt${identifier}`, isValueEmpty);
+        inputfieldToFailedStateIf(`txt${identifier}`, `row${identifier}`, isValueEmpty);
+        UserInterface.updateJoinButtonState();
+    },
+    updateJoinButtonState: function() {
+        const obj = $("#btnJoin");
+        if ($("#txtPassword").val() === "" || $("#txtRoom").val() === "" || $("#txtUsername").val() === "") {
+            obj.addClass("disabled");
+        } else {
+            obj.removeClass("disabled");
+        }
+    },
     onBtnSendMessageClick: function() {
         const e = encrypt($("#txtMessage").val().trim());
         if (!e) {
@@ -18,7 +59,6 @@
     },
 
     onBtnJoinClick: function() {
-        hide("divJoin");
         show("divKeyGeneration");
 
         $("#txtKeyGenerationAction").text("Generating Key...");
@@ -31,28 +71,28 @@
         worker.onmessage = function(d) {
             const data = d.data || {};
             switch (data.type) {
-            case "status":
-                $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
-                UserInterface.updateProgressbar(Math.floor(data.value));
-                break;
-            case "done":
-                key = JSON.parse(data.value);
+                case "status":
+                    $("#modaltxtKeyGenerationActionText").text(`Generating Key...`);
+                    UserInterface.updateProgressbar(Math.floor(data.value));
+                    break;
+                case "done":
+                    key = JSON.parse(data.value);
 
-                $("#txtKeyGenerationAction").text("Encrypting inputs...");
+                    $("#txtKeyGenerationAction").text("Encrypting inputs...");
 
-                // hash inputs
-                p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-                r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                    // hash inputs
+                    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
 
-                u = encrypt(u, DEFAULT_IV);
-                r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
+                    u = encrypt(u, DEFAULT_IV);
+                    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
 
-                user = u.ciphertext.toString(CryptoJS.enc.Base64);
-                room = r.ciphertext.toString(CryptoJS.enc.Base64);
+                    user = u.ciphertext.toString(CryptoJS.enc.Base64);
+                    room = r.ciphertext.toString(CryptoJS.enc.Base64);
 
-                $("#txtKeyGenerationAction").text("Initializing...");
-                Caller.init(user, room);
-                break;
+                    $("#txtKeyGenerationAction").text("Initializing...");
+                    Caller.init(user, room);
+                    break;
             }
         };
         worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
