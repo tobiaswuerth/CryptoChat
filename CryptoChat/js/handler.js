@@ -89,11 +89,14 @@ const handleGetUsersInRoom = function(data) {
 };
 const handleInitSuccess = function() {
     hide("divKeyGeneration");
-    hide("divJoin");
+    hide("divSettings");
     show("divConversationControls");
+    UserInterface.updateProgressbar(0);
 };
 const handleInitFailed = function(error) {
     hide("divKeyGeneration");
-    show("divJoin");
-    alert(error);
+    show("divSettings");
+    $("#txtErrorMessage").text(error);
+    UserInterface.updateProgressbar(0);
+    show("divError");
 };

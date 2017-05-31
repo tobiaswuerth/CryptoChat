@@ -19,6 +19,33 @@
     <link href="css/cryptochat.css" rel="stylesheet"/>
 </head>
 <body>
+
+<div id="divLeaveRoom" class="cover hide">
+    <div class="center">
+        <div class="justify">
+            <h1>
+                Are you sure you want to leave this room?
+                <br/>
+                <small>You will no longer receive any messages</small>
+            </h1>
+            <hr/>
+            <button id="btnLeaveRoomApproved" class="btn btn-outline-success btn-block">Yes, leave the room</button>
+            <button id="btnLeaveRoomDenied" class="btn btn-outline-success btn-block">No, stay here</button>
+        </div>
+    </div>
+</div>
+<div id="divError" class="cover hide">
+    <div class="center">
+        <div class="justify">
+            <h1>
+                Error
+                <small id="txtErrorMessage">message</small>
+            </h1>
+            <hr/>
+            <button id="btnErrorOk" class="btn btn-outline-danger btn-block">OK</button>
+        </div>
+    </div>
+</div>
 <div id="divKeyGeneration" class="cover hide">
     <div class="center">
         <div class="justify">
@@ -59,9 +86,9 @@
         </div>
     </div>
 </div>
-<div id="divJoin" class="cover">
+<div id="divSettings" class="cover">
     <div class="center">
-        <div id="divJoinFormWrapper">
+        <div id="divSettingsFormWrapper">
             <h1>
                 <img class="vtop" src="img/shield_h50.png" alt="logo" height="41"/> CryptoChat
             </h1>
@@ -96,19 +123,24 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group box row">
+            <div class="input-group box row" id="rowPasswordStrength">
                 <div class="progress fill" data-toggle="popover" id="divPwStrengthWrapper">
                     <div class="progress-bar bg-danger" role="progressbar" id="pbPwStrength" style="width: 1%"> </div>
                 </div>
             </div>
+            
+            <hr/>
+            
             <div class="input-group box row">
-                <button class="btn btn-lg btn-success btn-block disabled" type="submit" id="btnJoin">Join</button>
+                <button class="btn btn-lg btn-success btn-block disabled" type="submit" id="btnApplySettings">Join</button>
             </div>
-
+            <div class="input-group box row hide" id="rowCancelSettings">
+                <button class="btn btn-lg btn-success btn-block" type="submit" id="btnCancelSettings">Cancel</button>
+            </div>
+            
         </div>
     </div>
 </div>
-
 <div id="divConversationControls" class="hide">
     <div class="content no-margin no-padding">
         <div class="row fill no-margin no-padding">

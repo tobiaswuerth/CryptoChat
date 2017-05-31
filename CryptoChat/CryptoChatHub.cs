@@ -18,9 +18,17 @@
         public void Init(String username, String room)
         {
             User u = GetCurrentUser();
+            if (null == username && null == room)
+            {
+                // left room
+                GetUsersInRoomByConnection().ForEach(x => Clients.Client(x.Key).userLeft(u.Username));
+                _activeConnections.Remove(Context.ConnectionId);
+                return;
+            }
+
             if (null == u)
             {
-                HandleNewUser(username, room, u);
+                HandleNewUser(username, room);
                 return;
             }
 
@@ -64,7 +72,7 @@
             Clients.Caller.initSuccess();
         }
 
-        private void HandleNewUser(String username, String room, User u)
+        private void HandleNewUser(String username, String room)
         {
             if (!ValidateUsername(username, room))
             {
@@ -74,7 +82,7 @@
             }
 
             // new user
-            u = new User
+            User u = new User
                 {
                     Username = username,
                     Room = room

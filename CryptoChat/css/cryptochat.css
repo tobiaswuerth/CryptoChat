@@ -50,18 +50,28 @@
 .no-padding { padding: 0; }
 
 #divKeyGeneration { z-index: 10; }
+#divSettings {
+    z-index: 5;
+}
+#divReconnecting {
+    z-index: 20;
+}
 
-#divReconnecting { z-index: 20; }
-
-#divJoinFormWrapper {
+#divSettingsFormWrapper {
     max-width: 275px;
     min-width: 275px;
     width: 275px;
 }
+#divLeaveRoom {
+    z-index: 30;   
+}
+#divError {
+    z-index: 90;
+}
 
-#divPwDetails { transition: width .3s ease, max-width .3s ease; }
-
-#pbPwStrength { max-height: 5px }
+#pbPwStrength {
+    max-height: 5px
+}
 
 #btnShowHidePassword {
     border-left: 1px solid #d3d3d3; /*fallback*/
@@ -70,7 +80,7 @@
 
 .cover {
     background-color: #d3d3d3; /* fallback */
-    background-color: rgba(255, 255, 255, .75);
+    background-color: rgba(255, 255, 255, .90);
     height: 100%;
     overflow: hidden;
     position: absolute;
