@@ -5,6 +5,7 @@
     max-width: 100%;
     min-height: 100%;
     min-width: 100%;
+    overflow: hidden;
     padding: 0;
     width: 100%;
 }
@@ -50,11 +51,19 @@
 .no-padding { padding: 0; }
 
 #divKeyGeneration { z-index: 10; }
-#divSettings {
-    z-index: 5;
+
+#divSettings { z-index: 5; }
+
+#divReconnecting { z-index: 20; }
+
+#divConversationWrapper {
+    display: flex;
+    flex-direction: column;
 }
-#divReconnecting {
-    z-index: 20;
+
+#divChatWrapper {
+    margin-bottom: 10px;
+    overflow-y: auto;
 }
 
 #divSettingsFormWrapper {
@@ -62,18 +71,14 @@
     min-width: 275px;
     width: 275px;
 }
-#divLeaveRoom {
-    z-index: 30;   
-}
-#divError {
-    z-index: 90;
-}
 
-#pbPwStrength {
-    max-height: 5px
-}
+#divLeaveRoom { z-index: 30; }
 
-#btnShowHidePassword {
+#divError { z-index: 90; }
+
+#pbPwStrength { max-height: 5px }
+
+#btnShowHidePassword, #btnCopyPassword {
     border-left: 1px solid #d3d3d3; /*fallback*/
     border-left: 1px solid rgba(0, 0, 0, .15)
 }
@@ -112,4 +117,16 @@
     min-height: 100%;
     min-width: 100%;
     width: 100%;
+}
+
+::-webkit-scrollbar { width: 8px; }
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }

@@ -19,7 +19,6 @@
     <link href="css/cryptochat.css" rel="stylesheet"/>
 </head>
 <body>
-
 <div id="divLeaveRoom" class="cover hide">
     <div class="center">
         <div class="justify">
@@ -39,6 +38,7 @@
         <div class="justify">
             <h1>
                 Error
+                <br/>
                 <small id="txtErrorMessage">message</small>
             </h1>
             <hr/>
@@ -69,7 +69,8 @@
         <div class="justify">
             <div class="infinityLoadHeader">
                 <h1>
-                    No connection to the server!<br/>
+                    No connection to the server!
+                    <br/>
                     <small>
                         Trying to connect...
                     </small>
@@ -96,28 +97,31 @@
             <hr/>
 
             <div class="input-group box row" id="rowUsername" data-toggle="tooltip">
-                <span class="input-group-addon col-2">
+                <span class="input-group-addon col-1 no-padding">
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="col-10 form-control" placeholder="Username" id="txtUsername">
+                <input type="text" class="col-11 form-control" placeholder="Username" id="txtUsername" maxlength="24">
             </div>
             <div class="input-group box row" id="rowRoom" data-toggle="tooltip">
-                <span class="input-group-addon col-2">
-                    <i class="fa fa-users" aria-hidden="true"></i>
+                <span class="input-group-addon col-1 no-padding">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="col-10 form-control" placeholder="Room" id="txtRoom">
+                <input type="text" class="col-11 form-control" placeholder="Room" id="txtRoom" maxlength="128">
             </div>
             <div class="input-group box row" id="rowPassword" data-toggle="tooltip">
-                <span class="input-group-addon col-2">
+                <span class="input-group-addon col-1 no-padding">
                     <i class="fa fa-lock" aria-hidden="true"></i>
                 </span>
-                <input type="password" class="col-7 form-control" placeholder="Password" id="txtPassword"/>
+                <input type="password" class="col-8 form-control" placeholder="Password" id="txtPassword" maxlength="128"/>
                 <div class="col-3 input-group-addon no-margin no-padding">
                     <div class="row fill no-margin no-padding center">
-                        <span class="col-6 no-padding no-margin" id="btnRandomPassword">
+                        <span class="col-4 no-padding no-margin" id="btnRandomPassword" data-toggle="tooltip">
                             <i class="fill fa fa-refresh" aria-hidden="true"></i>
                         </span>
-                        <span class=" col-6 no-padding" id="btnShowHidePassword">
+                        <span class=" col-4 no-padding" id="btnCopyPassword" data-toggle="tooltip">
+                            <i class="fa fa-clipboard" aria-hidden="true"></i>
+                        </span>
+                        <span class=" col-4 no-padding" id="btnShowHidePassword" data-toggle="tooltip">
                             <i class="fa fa-eye" aria-hidden="true" id="icoShowHide"></i>
                         </span>
                     </div>
@@ -128,20 +132,20 @@
                     <div class="progress-bar bg-danger" role="progressbar" id="pbPwStrength" style="width: 1%"> </div>
                 </div>
             </div>
-            
+
             <hr/>
-            
+
             <div class="input-group box row">
                 <button class="btn btn-lg btn-success btn-block disabled" type="submit" id="btnApplySettings">Join</button>
             </div>
             <div class="input-group box row hide" id="rowCancelSettings">
                 <button class="btn btn-lg btn-success btn-block" type="submit" id="btnCancelSettings">Cancel</button>
             </div>
-            
+
         </div>
     </div>
 </div>
-<div id="divConversationControls" class="hide">
+<div id="divContent" class="hide">
     <div class="content no-margin no-padding">
         <div class="row fill no-margin no-padding">
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 shadow" id="divUserList">
@@ -152,8 +156,17 @@
                     None
                 </ul>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12 shadow" id="divConversation">
-                <ul id="chat" class="list-group"></ul>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12 shadow" id="divConversationWrapper">
+                <div>
+                    <br/>
+                    <h3>Chat</h3>
+                    <hr/>
+                </div>
+                <div id="divChatWrapper">
+                    <div id="chat">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -206,6 +219,7 @@
     <script src="js/vendor/prefixfree.min.js"></script>
     <script src="js/vendor/security/xss.js"></script>
     <script src="js/vendor/security/zxcvbn.js"></script>
+    <script src="js/vendor/clipboard.min.js"></script>
 
     <script src="signalr/hubs"></script>
 

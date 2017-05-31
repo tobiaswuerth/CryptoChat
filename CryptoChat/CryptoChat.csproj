@@ -103,6 +103,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\shield_h50.png" />
+    <Content Include="js\vendor\clipboard.min.js" />
     <Content Include="js\helper.js" />
     <Content Include="js\instance.js" />
     <Content Include="js\ui.js" />

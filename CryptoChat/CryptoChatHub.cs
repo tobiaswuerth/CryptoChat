@@ -83,10 +83,10 @@
 
             // new user
             User u = new User
-                {
-                    Username = username,
-                    Room = room
-                };
+                     {
+                         Username = username,
+                         Room = room
+                     };
             _activeConnections[Context.ConnectionId] = u;
             GetUsersInRoomByConnection().ForEach(x => Clients.Client(x.Key).userJoined(u.Username));
             Clients.Caller.initSuccess();

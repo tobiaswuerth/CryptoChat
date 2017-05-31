@@ -1,12 +1,6 @@
 ﻿const UserInterface = {
-    initialize: function () {
+    initialize: function() {
         $.connection.hub.stateChanged(handleConnectionStateChanged);
-        $("[data-toggle='tooltip']").tooltip({
-            placement: function () { return $(window).width() < 975 ? "top" : "right"; }
-        });
-        $("[data-toggle='popover']").popover({
-            placement: function () { return $(window).width() < 975 ? "top" : "right"; }
-        });
 
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnApplySettings").click(UserInterface.onBtnJoinClick);
@@ -36,104 +30,109 @@
         txtUsername.keyup(UserInterface.onTxtUsernameKeyUp);
         txtUsername.blur(UserInterface.onTxtUsernameKeyUp);
 
-        const rowPass = $("#rowPassword");
-        const rowRoom = $("#rowRoom");
-        const rowUser = $("#rowUsername");
+        const tooltips = new Array(/* [ obj, title, placement if no space right, trigger, delay show (ms) ] */
+            [$("#rowPassword"), "Input cannot be empty", "top", "manual", 0],
+            [$("#rowRoom"), "Input cannot be empty", "top", "manual", 0],
+            [$("#rowUsername"), "Input cannot be empty", "top", "manual", 0],
+            [$("#btnRandomPassword"), "Generate a new random password", "left", "hover", 500],
+            [$("#btnCopyPassword"), "Copy password to clipboard", "left", "hover", 500],
+            [$("#btnShowHidePassword"), "Show/Hide password", "left", "hover", 500]
+        );
 
-        removeTooltip(rowPass);
-        removeTooltip(rowRoom);
-        removeTooltip(rowUser);
+        tooltips.forEach(function(i) {
+            removeTooltip(i[0]);
+            i[0].tooltip({
+                title: i[1],
+                placement: function() { return $(window).width() < 975 ? i[2] : "right"; },
+                trigger: i[3],
+                delay: { show: i[4] }
+            });
+        });
 
-        rowPass.tooltip({
-            title: "Input cannot be empty",
-            placement: function () { return $(window).width() < 975 ? "top" : "right"; },
-            trigger: "manual",
-            html: false,
-            animation: true
-        });
-        rowRoom.tooltip({
-            title: "Input cannot be empty",
-            placement: function () { return $(window).width() < 975 ? "top" : "right"; },
-            trigger: "manual",
-            html: false,
-            animation: true
-        });
-        rowUser.tooltip({
-            title: "Input cannot be empty",
-            placement: function () { return $(window).width() < 975 ? "top" : "right"; },
-            trigger: "manual",
-            html: false,
-            animation: true
-        });
+        const clipboard = new Clipboard("#btnCopyPassword",
+            {
+                text: function(trigger) { return $("#txtPassword").val(); }
+            });
     },
     activeKeys: [],
+
     onTxtMessageKeyUp: function(event) {
+        const ak = new Array();
+        UserInterface.activeKeys.forEach(function(v, k) {
+            if (v) {
+                ak.push(k);
+            }
+        });
         UserInterface.activeKeys[event.keyCode] = false;
-        UserInterface.activeKeys.forEach(function (i, idx) {
-            console.log(idx + " " + i);
-        });
+
+        if (ak.length === 1 && ak[0] === 13) {
+            // only enter pressed -> send
+            UserInterface.onBtnSendMessageClick();
+        }
     },
-    onTxtMessageKeyDown: function (event) {
+    onTxtMessageKeyDown: function(event) {
         UserInterface.activeKeys[event.keyCode] = true;
-        UserInterface.activeKeys.forEach(function (i, idx) {
-            console.log(idx + " " + i);
-        });
     },
     onTxtMessageBlur: function() {
-        UserInterface.activeKeys.forEach(function(i) {
-            activeKeys[i] = false;
-        });
-        UserInterface.activeKeys.forEach(function (i, idx) {
-            console.log(idx + " " + i);
+        UserInterface.activeKeys.forEach(function(i, idx) {
+            UserInterface.activeKeys[idx] = false;
         });
     },
-    onBtnSettingsClicked: function () {
+    onBtnSettingsClicked: function() {
         hide("rowPassword");
         hide("rowPasswordStrength");
         hide("rowRoom");
         const btnApply = $("#btnApplySettings");
         btnApply.text("Apply Changes");
+        btnApply.unbind("click");
         btnApply.click(UserInterface.onBtnApplyClicked);
         show("rowCancelSettings");
-        setTimeout(function () {
-            show("divSettings");
-        }, 200);
+        setTimeout(function() {
+                show("divSettings");
+            },
+            200);
     },
-    onBtnApplyClicked: function () {
-
+    onBtnApplyClicked: function() {
+        let u = $("#txtUsername").val().trim();
+        u = encrypt(u, DEFAULT_IV);
+        user = u.ciphertext.toString(CryptoJS.enc.Base64);
+        Caller.init(user, room);
+        UserInterface.onBtnCancelSettingsClicked();
     },
-    onBtnErrorOkClicked: function () {
+    onBtnErrorOkClicked: function() {
         hide("divError");
     },
-    onBtnCancelSettingsClicked: function () {
+    onBtnCancelSettingsClicked: function() {
         hide("divSettings");
-        setTimeout(function () {
-            show("rowPassword");
-            show("rowPasswordStrength");
-            show("rowRoom");
-            const btnApply = $("#btnApplySettings");
-            btnApply.text("Join");
-            btnApply.click(UserInterface.onBtnJoinClick);
-            hide("rowCancelSettings");
-        }, 200);
+        setTimeout(function() {
+                show("rowPassword");
+                show("rowPasswordStrength");
+                show("rowRoom");
+                const btnApply = $("#btnApplySettings");
+                btnApply.text("Join");
+                btnApply.unbind("click");
+                btnApply.click(UserInterface.onBtnJoinClick);
+                hide("rowCancelSettings");
+            },
+            200);
     },
-    onBtnLeaveRoomClicked: function () {
+    onBtnLeaveRoomClicked: function() {
         show("divLeaveRoom");
     },
-    onBtnLeaveRoomApprovedClicked: function () {
+    onBtnLeaveRoomApprovedClicked: function() {
         Caller.init(null, null);
         hide("divLeaveRoom");
-        hide("divConversationControls");
+        hide("divContent");
         show("divSettings");
         $("#chat").empty();
         window.user = null;
         window.key = null;
         window.room = null;
     },
-    onBtnLeaveRoomDeniedClicked: function () {
+    onBtnLeaveRoomDeniedClicked: function() {
         hide("divLeaveRoom");
     },
-    onTxtPasswordKeyUp: function (event) {
+    onTxtPasswordKeyUp: function(event) {
         UserInterface.updatePasswordField();
         UserInterface.updateInputField("Password");
 
@@ -142,14 +141,14 @@
             UserInterface.onBtnJoinClick();
         }
     },
-    onBtnGeneratePasswordClick: function () {
+    onBtnGeneratePasswordClick: function() {
         const r1 = Math.random().toString(36).slice(2);
         const r2 = Math.random().toString(36).slice(2);
         const pw = r1 + r2;
         $("#txtPassword").val(pw);
         UserInterface.onTxtPasswordKeyUp(null);
     },
-    onBtnShowHidePasswordClick: function () {
+    onBtnShowHidePasswordClick: function() {
         const obj = $("#txtPassword");
         if (obj.attr("type") === "text") {
             obj.attr("type", "password");
@@ -159,8 +158,99 @@
             replaceClass("icoShowHide", "fa-eye", "fa-eye-slash");
         }
     },
+    onTxtRoomKeyUp: function(event) {
+        UserInterface.updateInputField("Room");
+
+        if (null != event && 13 === event.keyCode) {
+            // enter
+            $("#txtPassword").focus();
+        }
+    },
+    onTxtUsernameKeyUp: function(event) {
+        UserInterface.updateInputField("Username");
+        if (null != event && 13 === event.keyCode) {
+            // enter
+            $("#txtRoom").focus();
+        }
+    },
+    onBtnSendMessageClick: function() {
+        let msg = $("#txtMessage").val().trim();
+        if (!msg) {
+            // empty
+            return;
+        }
+        const e = encrypt(msg);
+        msg = e.ciphertext.toString(CryptoJS.enc.Base64);
+        Caller.sendMessage(msg, e.iv);
+        $("#txtMessage").val("").focus();
+    },
+    onBtnJoinClick: function() {
+        if (!UserInterface.updateJoinButtonState()) {
+            return;
+        }
+        removePopover($("#divPwStrengthWrapper"));
+        show("divKeyGeneration");
+
+        $("#txtKeyGenerationAction").text("Generating Key...");
+
+        let p = $("#txtPassword").val();
+        let r = $("#txtRoom").val().trim();
+        let u = $("#txtUsername").val().trim();
+
+        if (p.length > 128 || r.length > 128 || u.length > 24) {
+            hide("divKeyGeneration");
+            handleError("Invalid input data");
+            return;
+        }
+
+        const worker = new Worker("js/worker/keyworker.js");
+        worker.onmessage = function(d) {
+            const data = d.data || {};
+            switch (data.type) {
+            case "status":
+                UserInterface.updateProgressbar(Math.floor(data.value));
+                break;
+            case "done":
+                key = JSON.parse(data.value);
+
+                $("#txtKeyGenerationAction").text("Encrypting inputs...");
+
+                // hash inputs
+                p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+
+                u = encrypt(u, DEFAULT_IV);
+                r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
+
+                user = u.ciphertext.toString(CryptoJS.enc.Base64);
+                room = r.ciphertext.toString(CryptoJS.enc.Base64);
+
+                $("#txtKeyGenerationAction").text("Initializing...");
+                Caller.init(user, room);
+                break;
+            }
+        };
+        worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
+    },
+    onBtnShowHideUserListClick: function() {
+        if ($("#divUserList").is(":visible")) {
+            hide("divUserList");
+            setTimeout(function() {
+                    replaceClass("divConversationWrapper", "col-xl-9", "col-xl-12");
+                    replaceClass("divConversationWrapper", "col-lg-9", "col-lg-12");
+                    replaceClass("divConversationWrapper", "col-md-9", "col-md-12");
+                },
+                200);
+        } else {
+            show("divUserList");
+            replaceClass("divConversationWrapper", "col-xl-12", "col-xl-9");
+            replaceClass("divConversationWrapper", "col-lg-12", "col-lg-9");
+            replaceClass("divConversationWrapper", "col-md-12", "col-md-9");
+        }
+    },
+
     updatePasswordFieldTimeout: null,
-    updatePasswordField: function () {
+    updatePasswordField: function() {
         const pw = $("#txtPassword").val();
         const pwRow = $("#divPwStrengthWrapper");
         const obj = $("#pbPwStrength");
@@ -201,23 +291,19 @@
         }
 
         // build popover
-        let body = $("<div>");
+        let popb = $("<div>");
 
-        const close = $("<a>");
-        close.addClass("close");
-        close.html("&times;");
-        $(document).on("click",
-            close,
-            function () {
+        $(document).on("mouseover",
+            popb,
+            function() {
                 removePopover(pwRow);
             });
-        body.append(close);
 
         if (pwCheckResult.feedback.warning !== "") {
             // build warning
             let warningDiv = $("<div>");
             warningDiv.addClass("alert alert-warning");
-            body.append(warningDiv);
+            popb.append(warningDiv);
 
             let wtitle = $("<b>");
             wtitle.text("Warning");
@@ -233,7 +319,7 @@
         // build suggestions
         let suggestionDiv = $("<div>");
         suggestionDiv.addClass("alert alert-info no-margin");
-        body.append(suggestionDiv);
+        popb.append(suggestionDiv);
 
         let stitle = $("<b>");
         stitle.text("Suggestions");
@@ -241,7 +327,7 @@
 
         suggestionDiv.append($("<br>"));
 
-        pwCheckResult.feedback.suggestions.forEach(function (i) {
+        pwCheckResult.feedback.suggestions.forEach(function(i) {
             const li = $("<span>");
             li.text(`• ${i}`);
             suggestionDiv.append(li);
@@ -251,37 +337,22 @@
         pwRow.popover({
             animation: true,
             html: true,
-            content: body.html(),
-            placement: function () { return $(window).width() < 975 ? "bottom" : "right"; }
+            content: popb.html(),
+            placement: function() { return $(window).width() < 875 ? "bottom" : "right"; }
         });
         clearTimeout(UserInterface.updatePasswordFieldTimeout);
         pwRow.popover("show");
-        UserInterface.updatePasswordFieldTimeout = setTimeout(function () {
-            removePopover(pwRow);
-        },
-            3000);
+        UserInterface.updatePasswordFieldTimeout = setTimeout(function() {
+                removePopover(pwRow);
+            },
+            2000);
     },
-    onTxtRoomKeyUp: function (event) {
-        UserInterface.updateInputField("Room");
-
-        if (null != event && 13 === event.keyCode) {
-            // enter
-            $("#txtPassword").focus();
-        }
-    },
-    onTxtUsernameKeyUp: function (event) {
-        UserInterface.updateInputField("Username");
-        if (null != event && 13 === event.keyCode) {
-            // enter
-            $("#txtRoom").focus();
-        }
-    },
-    updateInputField: function (identifier) {
+    updateInputField: function(identifier) {
         showTooltipIf(`txt${identifier}`, `row${identifier}`, isValueEmpty);
         inputfieldToFailedStateIf(`txt${identifier}`, `row${identifier}`, isValueEmpty);
         UserInterface.updateJoinButtonState();
     },
-    updateJoinButtonState: function () {
+    updateJoinButtonState: function() {
         const obj = $("#btnApplySettings");
         if ($("#txtPassword").val() === "" || $("#txtRoom").val() === "" || $("#txtUsername").val() === "") {
             obj.addClass("disabled");
@@ -291,59 +362,7 @@
             return true;
         }
     },
-    onBtnSendMessageClick: function () {
-        const e = encrypt($("#txtMessage").val().trim());
-        if (!e) {
-            // empty message
-            return;
-        }
-        const msg = e.ciphertext.toString(CryptoJS.enc.Base64);
-        Caller.sendMessage(msg, e.iv);
-        $("#txtMessage").val("").focus();
-    },
-    onBtnJoinClick: function () {
-        if (!UserInterface.updateJoinButtonState()) {
-            return;
-        }
-        removePopover($("#divPwStrengthWrapper"));
-        show("divKeyGeneration");
-
-        $("#txtKeyGenerationAction").text("Generating Key...");
-
-        let p = $("#txtPassword").val();
-        let r = $("#txtRoom").val().trim();
-        let u = $("#txtUsername").val().trim();
-
-        const worker = new Worker("js/worker/keyworker.js");
-        worker.onmessage = function (d) {
-            const data = d.data || {};
-            switch (data.type) {
-                case "status":
-                    UserInterface.updateProgressbar(Math.floor(data.value));
-                    break;
-                case "done":
-                    key = JSON.parse(data.value);
-
-                    $("#txtKeyGenerationAction").text("Encrypting inputs...");
-
-                    // hash inputs
-                    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-                    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-
-                    u = encrypt(u, DEFAULT_IV);
-                    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
-
-                    user = u.ciphertext.toString(CryptoJS.enc.Base64);
-                    room = r.ciphertext.toString(CryptoJS.enc.Base64);
-
-                    $("#txtKeyGenerationAction").text("Initializing...");
-                    Caller.init(user, room);
-                    break;
-            }
-        };
-        worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
-    },
-    updateProgressbar: function (percent) {
+    updateProgressbar: function(percent) {
         const $ppc = $(".progress-pie-chart");
         const deg = 360 * percent / 100;
         if (percent > 50) {
@@ -351,21 +370,5 @@
         }
         $(".ppc-progress-fill").css("transform", `rotate(${deg}deg)`);
         $(".ppc-percents span").html(percent + "%");
-    },
-    onBtnShowHideUserListClick: function () {
-        if ($("#divUserList").is(":visible")) {
-            hide("divUserList");
-            setTimeout(function () {
-                replaceClass("divConversation", "col-xl-9", "col-xl-12");
-                replaceClass("divConversation", "col-lg-9", "col-lg-12");
-                replaceClass("divConversation", "col-md-9", "col-md-12");
-            },
-                200);
-        } else {
-            show("divUserList");
-            replaceClass("divConversation", "col-xl-12", "col-xl-9");
-            replaceClass("divConversation", "col-lg-12", "col-lg-9");
-            replaceClass("divConversation", "col-md-12", "col-md-9");
-        }
     }
 }

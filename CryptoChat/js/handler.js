@@ -13,19 +13,67 @@ const insertNewMessage = function(user, message) {
             stripIgnoreTagBody: ["script"] // the script tag is a special case, we need
             // to filter out its content
         });
+    message = message.replace("\n", "<br />");
 
-    const entry = $("<li>");
-    entry.addClass("list-group-item");
-    entry.append(`[${new Date().toLocaleTimeString()}] `); // date
+    const b = $("<div>");
+    b.css("min-width", "100%");
+    b.css("display", "flex");
+    b.css("margin-top", "2px");
+
+    const d = $("<span>");
+    d.addClass("badge");
+    d.css("background-color", "rgba(0, 0, 0, .25)");
+    d.text(new Date().toLocaleTimeString());
+    b.append(d);
+
     const u = $("<strong>");
-    u.text(user);
-    entry.append(u);
-    entry.append(" : ");
-    entry.append(message);
-    $("#chat").append(entry);
+    u.css("margin-left", "10px");
+    u.css("margin-right", "3px");
+    u.css("word-wrap", "break-word");
+    u.css("display", "inline-block");
+    u.css("max-width", "100%");
+    u.text(` ${user} `);
+    b.append(u);
+    b.append(" : ");
+
+    const m = $("<div>");
+    m.css("word-wrap", "break-word");
+    m.css("display", "inline-block");
+    m.css("max-width", "100%");
+    m.html(message);
+    b.append(m);
+    const chat = $("#chat");
+
+    let color = colors[0];
+    if (chat.children().length !== 0) {
+        // not first entry
+        const prev = chat.children().last();
+        if (prev.prop("cc:user") === user) {
+            // message from same user
+            prev.append(b);
+            return;
+        } else {
+            color = prev.prop("cc:color");
+        }
+    }
+
+    const root = $("<div>");
+    root.addClass("alert");
+    color = nextColor(color);
+    root.css("background-color", color);
+    root.css("margin-bottom", "2px");
+    root.css("margin-top", "2px");
+    root.prop("cc:user", user);
+    root.prop("cc:color", color);
+    root.css("flex-direction", "column");
+    root.append(b);
+
+    chat.append(root);
 };
-const handleError = function(message) {
-    alert(message);
+const handleError = function(error) {
+    $("#txtErrorMessage").text(error);
+    UserInterface.updateProgressbar(0);
+    show("divError");
 };
 
 const handleUserJoined = function(user) {
@@ -80,9 +128,14 @@ const handleGetUsersInRoom = function(data) {
     const list = $("#users");
     list.empty();
 
+    let color = colors[0];
     data.forEach(x => {
         const entry = $("<li>");
-        entry.addClass("list-group-item");
+        entry.addClass("alert");
+        entry.css("margin-bottom", "2px");
+        entry.css("margin-top", "2px");
+        color = nextColor(color);
+        entry.css("background-color", color);
         entry.text(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8));
         list.append(entry);
     });
@@ -90,13 +143,16 @@ const handleGetUsersInRoom = function(data) {
 const handleInitSuccess = function() {
     hide("divKeyGeneration");
     hide("divSettings");
-    show("divConversationControls");
+    show("divContent");
     UserInterface.updateProgressbar(0);
 };
 const handleInitFailed = function(error) {
     hide("divKeyGeneration");
     show("divSettings");
     $("#txtErrorMessage").text(error);
-    UserInterface.updateProgressbar(0);
     show("divError");
+    setTimeout(function() {
+            UserInterface.updateProgressbar(0);
+        },
+        200);
 };
