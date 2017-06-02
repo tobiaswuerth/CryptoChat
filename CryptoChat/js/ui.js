@@ -2,6 +2,8 @@
     initialize: function() {
         $.connection.hub.stateChanged(handleConnectionStateChanged);
 
+        $("#txtUsername").focus();
+
         $("#btnSendMessage").click(UserInterface.onBtnSendMessageClick);
         $("#btnApplySettings").click(UserInterface.onBtnJoinClick);
         $("#btnShowHideUserList").click(UserInterface.onBtnShowHideUserListClick);
@@ -16,6 +18,8 @@
         $("#txtMessage").keyup(UserInterface.onTxtMessageKeyUp);
         $("#txtMessage").keydown(UserInterface.onTxtMessageKeyDown);
         $("#txtMessage").blur(UserInterface.onTxtMessageBlur);
+        $("#divChat").scroll(UserInterface.updateBtnScrollDown);
+        $("#btnScrollDown").click(UserInterface.scrollChatDown);
 
         const txtPass = $("#txtPassword");
         const txtRoom = $("#txtRoom");
@@ -43,7 +47,9 @@
             removeTooltip(i[0]);
             i[0].tooltip({
                 title: i[1],
-                placement: function() { return $(window).width() < 975 ? i[2] : "right"; },
+                placement: function() {
+                    return $(window).width() < 975 ? i[2] : "right";
+                },
                 trigger: i[3],
                 delay: { show: i[4] }
             });
@@ -51,7 +57,9 @@
 
         const clipboard = new Clipboard("#btnCopyPassword",
             {
-                text: function(trigger) { return $("#txtPassword").val(); }
+                text: function(trigger) {
+                    return $("#txtPassword").val();
+                }
             });
     },
     activeKeys: [],
@@ -92,6 +100,24 @@
             },
             200);
     },
+    scrollChatDown: function() {
+        const chat = $("#divChat");
+        chat.animate({ scrollTop: chat.prop("scrollHeight") }, 500);
+
+        UserInterface.updateBtnScrollDown();
+    },
+    updateBtnScrollDown: function() {
+        setTimeout(function() {
+                const divChat = $("#divChat");
+                if (divChat.scrollTop() + divChat.innerHeight() >= divChat[0].scrollHeight) {
+                    // div at bottom
+                    hide("btnScrollDown");
+                } else {
+                    show("btnScrollDown");
+                }
+            },
+            500);
+    },
     onBtnApplyClicked: function() {
         let u = $("#txtUsername").val().trim();
         u = encrypt(u, DEFAULT_IV);
@@ -123,8 +149,9 @@
         Caller.init(null, null);
         hide("divLeaveRoom");
         hide("divContent");
+        hide("rowCancelSettings");
         show("divSettings");
-        $("#chat").empty();
+        $("#divChat").empty();
         window.user = null;
         window.key = null;
         window.room = null;
@@ -207,27 +234,27 @@
         worker.onmessage = function(d) {
             const data = d.data || {};
             switch (data.type) {
-            case "status":
-                UserInterface.updateProgressbar(Math.floor(data.value));
-                break;
-            case "done":
-                key = JSON.parse(data.value);
+                case "status":
+                    UserInterface.updateProgressbar(Math.floor(data.value));
+                    break;
+                case "done":
+                    key = JSON.parse(data.value);
 
-                $("#txtKeyGenerationAction").text("Encrypting inputs...");
+                    $("#txtKeyGenerationAction").text("Encrypting inputs...");
 
-                // hash inputs
-                p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-                r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                    // hash inputs
+                    p = CryptoJS.SHA3(p, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+                    r = CryptoJS.SHA3(r, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
 
-                u = encrypt(u, DEFAULT_IV);
-                r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
+                    u = encrypt(u, DEFAULT_IV);
+                    r = encrypt(p + r, DEFAULT_IV); // room identification is based on password and room
 
-                user = u.ciphertext.toString(CryptoJS.enc.Base64);
-                room = r.ciphertext.toString(CryptoJS.enc.Base64);
+                    user = u.ciphertext.toString(CryptoJS.enc.Base64);
+                    room = r.ciphertext.toString(CryptoJS.enc.Base64);
 
-                $("#txtKeyGenerationAction").text("Initializing...");
-                Caller.init(user, room);
-                break;
+                    $("#txtKeyGenerationAction").text("Initializing...");
+                    Caller.init(user, room);
+                    break;
             }
         };
         worker.postMessage({ cmd: "startKeyGeneration", param: { pass: p, room: r } });
@@ -338,7 +365,9 @@
             animation: true,
             html: true,
             content: popb.html(),
-            placement: function() { return $(window).width() < 875 ? "bottom" : "right"; }
+            placement: function() {
+                return $(window).width() < 875 ? "bottom" : "right";
+            }
         });
         clearTimeout(UserInterface.updatePasswordFieldTimeout);
         pwRow.popover("show");

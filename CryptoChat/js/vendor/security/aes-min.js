@@ -72,13 +72,13 @@ code.google.com/p/crypto-js/wiki/License
                 e = this._invKeySchedule = [];
                 for (a = 0; a < c; a++) {
                     h = c - a, d = a % 4 ? b[h] : b[h - 4], e[a] = 4 > a || 4 >= h
-                        ? d
-                        : s[j[d >>> 24]] ^
-                        u[j[d >>> 16 & 255]] ^
-                        v[j[d >>>
-                            8 &
-                            255]] ^
-                        w[j[d & 255]];
+                                                                   ? d
+                                                                   : s[j[d >>> 24]] ^
+                                                                   u[j[d >>> 16 & 255]] ^
+                                                                   v[j[d >>>
+                                                                       8 &
+                                                                       255]] ^
+                                                                   w[j[d & 255]];
                 }
             },
             encryptBlock: function(c, e) {

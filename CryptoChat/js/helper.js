@@ -1,10 +1,12 @@
 ﻿const hide = function(id) {
     const obj = $(`#${id}`);
-    obj.fadeOut("fast");
+    obj.addClass("display-none");
+    obj.removeClass("flex");
 };
 const show = function(id) {
     const obj = $(`#${id}`);
-    obj.fadeIn("fast");
+    obj.removeClass("display-none");
+    obj.addClass("flex");
 };
 const replaceClass = function(id, from, to) {
     const obj = $(`#${id}`);

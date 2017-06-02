@@ -13,12 +13,16 @@ const insertNewMessage = function(user, message) {
             stripIgnoreTagBody: ["script"] // the script tag is a special case, we need
             // to filter out its content
         });
-    message = message.replace("\n", "<br />");
+
+    message = message.replace(/\n/g, "<br />");
 
     const b = $("<div>");
     b.css("min-width", "100%");
     b.css("display", "flex");
     b.css("margin-top", "2px");
+    b.addClass("flex-sm-column");
+    b.addClass("flex-column");
+    b.addClass("flex-md-row");
 
     const d = $("<span>");
     d.addClass("badge");
@@ -27,30 +31,36 @@ const insertNewMessage = function(user, message) {
     b.append(d);
 
     const u = $("<strong>");
-    u.css("margin-left", "10px");
-    u.css("margin-right", "3px");
+    u.addClass("margin-md-left-10");
+    u.addClass("margin-md-right-5");
     u.css("word-wrap", "break-word");
     u.css("display", "inline-block");
     u.css("max-width", "100%");
-    u.text(` ${user} `);
+    u.text(`${user}:`);
     b.append(u);
-    b.append(" : ");
 
     const m = $("<div>");
     m.css("word-wrap", "break-word");
+    m.css("word-break", "break-all");
     m.css("display", "inline-block");
     m.css("max-width", "100%");
     m.html(message);
     b.append(m);
-    const chat = $("#chat");
 
     let color = colors[0];
+    const chat = $("#divChat");
+
+    const doScroll = chat.scrollTop() + chat.innerHeight() >= chat[0].scrollHeight;
+
     if (chat.children().length !== 0) {
         // not first entry
         const prev = chat.children().last();
         if (prev.prop("cc:user") === user) {
             // message from same user
             prev.append(b);
+            if (doScroll) {
+                UserInterface.scrollChatDown();
+            }
             return;
         } else {
             color = prev.prop("cc:color");
@@ -69,6 +79,9 @@ const insertNewMessage = function(user, message) {
     root.append(b);
 
     chat.append(root);
+    if (doScroll) {
+        UserInterface.scrollChatDown();
+    }
 };
 const handleError = function(error) {
     $("#txtErrorMessage").text(error);
@@ -97,18 +110,18 @@ const handleUserRenamed = function(before, after) {
 };
 const handleConnectionStateChanged = function(state) {
     switch (state.newState) {
-    case 0:
-        handleConnecting();
-        break;
-    case 1:
-        handleConnected();
-        break;
-    case 2:
-        handleReconnecting();
-        break;
-    case 4:
-        handleDisconnected();
-        break;
+        case 0:
+            handleConnecting();
+            break;
+        case 1:
+            handleConnected();
+            break;
+        case 2:
+            handleReconnecting();
+            break;
+        case 4:
+            handleDisconnected();
+            break;
     }
 };
 const handleConnected = function() {
@@ -125,19 +138,21 @@ const handleDisconnected = function() {
     $.connection.hub.start();
 };
 const handleGetUsersInRoom = function(data) {
-    const list = $("#users");
+    const list = $("#divUsers");
     list.empty();
 
     let color = colors[0];
     data.forEach(x => {
-        const entry = $("<li>");
-        entry.addClass("alert");
-        entry.css("margin-bottom", "2px");
-        entry.css("margin-top", "2px");
+        const row = $("<div>");
+        row.addClass("alert");
         color = nextColor(color);
-        entry.css("background-color", color);
-        entry.text(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8));
-        list.append(entry);
+        row.css("background-color", color);
+        row.css("margin-bottom", "2px");
+        row.css("margin-top", "2px");
+        row.addClass("margin-sm-left-5", "2px");
+        row.addClass("margin-sm-right-5", "2px");
+        row.text(decrypt(x, DEFAULT_IV).toString(CryptoJS.enc.Utf8));
+        list.append(row);
     });
 };
 const handleInitSuccess = function() {
@@ -145,6 +160,7 @@ const handleInitSuccess = function() {
     hide("divSettings");
     show("divContent");
     UserInterface.updateProgressbar(0);
+    $("#txtMessage").focus();
 };
 const handleInitFailed = function(error) {
     hide("divKeyGeneration");

@@ -287,8 +287,8 @@
                     return str.replace(REGEXP_ATTR_VALUE_1,
                         function replaceUnicode(str, code) {
                             return (code[0] === "x" || code[0] === "X")
-                                ? String.fromCharCode(parseInt(code.substr(1), 16))
-                                : String.fromCharCode(parseInt(code, 10));
+                                       ? String.fromCharCode(parseInt(code.substr(1), 16))
+                                       : String.fromCharCode(parseInt(code, 10));
                         });
                 }
 
@@ -1183,10 +1183,10 @@
                     whiteList["backface-visibility"] = false; // default: visible
                     whiteList["background"] = true; // default: depending on individual properties
                     whiteList["background-attachment"] = true; // default: scroll
-                    whiteList["background-clip"] = true; // default: border-box
+                    whiteList["background-clip"] = true; // default: border-marginBox
                     whiteList["background-color"] = true; // default: transparent
                     whiteList["background-image"] = true; // default: none
-                    whiteList["background-origin"] = true; // default: padding-box
+                    whiteList["background-origin"] = true; // default: padding-marginBox
                     whiteList["background-position"] = true; // default: 0% 0%
                     whiteList["background-repeat"] = true; // default: repeat
                     whiteList["background-size"] = true; // default: auto
@@ -1232,7 +1232,7 @@
                     whiteList["bottom"] = false; // default: auto
                     whiteList["box-decoration-break"] = true; // default: slice
                     whiteList["box-shadow"] = true; // default: none
-                    whiteList["box-sizing"] = true; // default: content-box
+                    whiteList["box-sizing"] = true; // default: content-marginBox
                     whiteList["box-snap"] = true; // default: none
                     whiteList["box-suppress"] = true; // default: show
                     whiteList["break-after"] = true; // default: auto
@@ -1357,19 +1357,19 @@
                     whiteList["marker-offset"] = false; // default: auto
                     whiteList["marker-side"] = false; // default: list-item
                     whiteList["marks"] = false; // default: none
-                    whiteList["mask"] = false; // default: border-box
+                    whiteList["mask"] = false; // default: border-marginBox
                     whiteList["mask-box"] = false; // default: see individual properties
                     whiteList["mask-box-outset"] = false; // default: 0
                     whiteList["mask-box-repeat"] = false; // default: stretch
                     whiteList["mask-box-slice"] = false; // default: 0 fill
                     whiteList["mask-box-source"] = false; // default: none
                     whiteList["mask-box-width"] = false; // default: auto
-                    whiteList["mask-clip"] = false; // default: border-box
+                    whiteList["mask-clip"] = false; // default: border-marginBox
                     whiteList["mask-image"] = false; // default: none
-                    whiteList["mask-origin"] = false; // default: border-box
+                    whiteList["mask-origin"] = false; // default: border-marginBox
                     whiteList["mask-position"] = false; // default: center
                     whiteList["mask-repeat"] = false; // default: no-repeat
-                    whiteList["mask-size"] = false; // default: border-box
+                    whiteList["mask-size"] = false; // default: border-marginBox
                     whiteList["mask-source-type"] = false; // default: auto
                     whiteList["mask-type"] = false; // default: luminance
                     whiteList["max-height"] = true; // default: none

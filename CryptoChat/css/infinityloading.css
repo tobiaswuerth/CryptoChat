@@ -4,7 +4,7 @@
     width: 150px;
 }
 
-.infinityloadWrap, .infinityloadWrap * { box-sizing: content-box; }
+.infinityloadWrap, .infinityloadWrap * { box-sizing: content-marginBox; }
 
 .infinityloadLoader {
     animation: loadEr 3s infinite;
