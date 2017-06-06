@@ -1,0 +1,63 @@
+[
+  {
+    "outputFileName": "css/_bundle.css",
+    "inputFiles": [
+      "css/reset.min.css",
+      "css/tether.min.css",
+      "css/tether-theme-arrows-dark.min.css",
+      "css/tether-theme-arrows.min.css",
+      "css/tether-theme-basic.min.css",
+      "css/bootstrap.min.css",
+      "css/bootstrap-grid.min.css",
+      "css/bootstrap-reboot.min.css",
+      "css/font-awesome.min.css",
+      "css/cryptochat.css",
+      "css/infinityloading.css",
+      "css/progressbar.css"
+    ]
+  },
+  {
+    "outputFileName": "js/vendor/security/_cryptojs-bundle.js",
+    "inputFiles": [
+      "js/vendor/security/core-min.js",
+      "js/vendor/security/x64-core-min.js",
+      "js/vendor/security/enc-base64-min.js",
+      "js/vendor/security/cipher-core-min.js",
+      "js/vendor/security/format-hex-min.js",
+      "js/vendor/security/hmac-min.js",
+      "js/vendor/security/sha3-min.js",
+      "js/vendor/security/pbkdf2.js",
+      "js/vendor/security/mode-ctr-min.js",
+      "js/vendor/security/aes-min.js"
+    ]
+  },
+  {
+    "outputFileName": "js/vendor/_bundle.js",
+    "inputFiles": [
+      "js/vendor/jquery-3.1.1.min.js",
+      "js/vendor/jquery.signalR-2.2.2.min.js",
+      "js/vendor/tether.min.js",
+      "js/vendor/bootstrap.min.js",
+      "js/vendor/prefixfree.min.js",
+      "js/vendor/clipboard.min.js"
+    ]
+  },
+  {
+    "outputFileName": "js/_bundle.js",
+    "inputFiles": [
+      "js/instance.js",
+      "js/helper.js",
+      "js/ui.js",
+      "js/caller.js",
+      "js/handler.js",
+      "js/security.js",
+      "js/cryptochat.js"
+    ]
+  },
+  {
+    "outputFileName": "js/vendor/security/xss.min.js",
+    "inputFiles": [
+      "js/vendor/security/xss.js"
+    ]
+  }
+]

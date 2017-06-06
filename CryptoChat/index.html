@@ -4,220 +4,240 @@
     <title>CryptoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
-
-    <link href="css/reset.min.css" rel="stylesheet"/>
-    <link href="css/progressbar.css" rel="stylesheet"/>
-    <link href="css/infinityloading.css" rel="stylesheet"/>
-    <link href="css/tether.min.css" rel="stylesheet"/>
-    <link href="css/tether-theme-arrows-dark.min.css" rel="stylesheet"/>
-    <link href="css/tether-theme-arrows.min.css" rel="stylesheet"/>
-    <link href="css/tether-theme-basic.min.css" rel="stylesheet"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
-    <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
-    <link href="css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="css/cryptochat.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="divError" class="cover display-none z-index-60">
-    <div class="center height-100vh width-100vw">
-        <div class="justify">
-            <h1>
-                Error
-                <br/>
-                <small id="txtErrorMessage">message</small>
-            </h1>
-            <hr/>
-            <button id="btnErrorOk" class="btn btn-outline-danger btn-block">OK</button>
+    <div id="divSplashscreen" class="cover center height-100vh width-100vw z-index-70">
+        <div class="loader loader--style1" title="0">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+            <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
+
+
+
+            <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z">
+            <animateTransform attributeType="xml"
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 20 20"
+                              to="360 20 20"
+                              dur="0.5s"
+                              repeatCount="indefinite" />
+
+
+
+            </path>
+        </svg>
         </div>
     </div>
-</div>
-<div id="divReconnecting" class="cover display-none z-index-50">
-    <div class="center height-100vh width-100vw">
-        <div class="justify">
-            <div class="infinityLoadHeader">
+    <div id="divError" class="cover display-none z-index-60">
+        <div class="center height-100vh width-100vw">
+            <div class="justify">
                 <h1>
-                    No connection to the server!
-                    <br/>
-                    <small>
-                        Trying to connect...
-                    </small>
+                    Error
+                    <br />
+                    <small id="txtErrorMessage">message</small>
                 </h1>
-                <p>Messages which are sent now will not be visible to you</p>
-            </div>
-            <div class="infinityloadWrap">
-                <h1>!</h1>
-                <div class="infinityloadLoader"></div>
-                <div class="infinityloadLoaderbefore"></div>
-                <div class="infinityloadCircular"></div>
-                <div class="infinityloadCircular infinityloadAnother"></div>
+                <hr />
+                <button id="btnErrorOk" class="btn btn-outline-danger btn-block">OK</button>
             </div>
         </div>
     </div>
-</div>
-<div id="divSettings" class="cover z-index-20">
-    <div class="center height-100vh width-100vw">
-        <div class="width-275">
-            <h1>
-                <img class="vtop" src="img/shield_h50.png" alt="logo" height="41"/> CryptoChat
-            </h1>
-            <hr/>
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowUsername" data-toggle="tooltip">
-                <span class="input-group-addon width-25 no-padding">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                </span>
-                <input type="text" class="flex-grow-1 form-control" placeholder="Username" id="txtUsername" maxlength="24">
-            </div>
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowRoom" data-toggle="tooltip">
-                <span class="input-group-addon width-25 no-padding">
-                    <i class="fa fa-globe" aria-hidden="true"></i>
-                </span>
-                <input type="text" class="flex-grow-1 form-control" placeholder="Room" id="txtRoom" maxlength="128">
-            </div>
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowPassword" data-toggle="tooltip">
-                <span class="input-group-addon width-25 no-padding">
-                    <i class="fa fa-lock" aria-hidden="true"></i>
-                </span>
-                <input type="password" class="flex-grow-1 form-control" placeholder="Password" id="txtPassword" maxlength="128"/>
-                <div class="input-group-addon no-margin no-padding flex flex-row center">
-                    <span class="flex-grow-1 width-25" id="btnRandomPassword" data-toggle="tooltip">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </span>
-                    <span class=" flex-grow-1 width-25 border-left" id="btnCopyPassword" data-toggle="tooltip">
-                        <i class="fa fa-clipboard" aria-hidden="true"></i>
-                    </span>
-                    <span class=" flex-grow-1 width-25 border-left" id="btnShowHidePassword" data-toggle="tooltip">
-                        <i class="fa fa-eye" aria-hidden="true" id="icoShowHide"></i>
-                    </span>
+    <div id="divReconnecting" class="cover display-none z-index-50">
+        <div class="center height-100vh width-100vw">
+            <div class="justify">
+                <div class="infinityLoadHeader">
+                    <h1>
+                        No connection to the server!
+                        <br />
+                        <small>
+                            Trying to connect...
+                        </small>
+                    </h1>
+                    <p>Messages which are sent now will not be visible to you</p>
+                </div>
+                <div class="infinityloadWrap">
+                    <h1>!</h1>
+                    <div class="infinityloadLoader"></div>
+                    <div class="infinityloadLoaderbefore"></div>
+                    <div class="infinityloadCircular"></div>
+                    <div class="infinityloadCircular infinityloadAnother"></div>
                 </div>
             </div>
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowPasswordStrength">
-                <div class="progress width-100p" data-toggle="popover" id="divPwStrengthWrapper">
-                    <div class="progress-bar bg-danger" role="progressbar" id="pbPwStrength" style="width: 1%"> </div>
-                </div>
-            </div>
-
-            <hr/>
-
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding">
-                <button class="btn  btn-success btn-block disabled" type="submit" id="btnApplySettings">Join</button>
-            </div>
-            <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowCancelSettings">
-                <button class="btn btn-sm btn-success btn-block" type="submit" id="btnCancelSettings">Cancel</button>
-            </div>
-
         </div>
     </div>
-</div>
-<div id="divLeaveRoom" class="cover display-none z-index-30">
-    <div class="center height-100vh width-100vw">
-        <div class="justify">
-            <h1>
-                Are you sure you want to leave this room?
-                <br/>
-                <small>You will no longer receive any messages</small>
-            </h1>
-            <hr/>
-            <button id="btnLeaveRoomApproved" class="btn btn-outline-success btn-block">Yes, leave the room</button>
-            <button id="btnLeaveRoomDenied" class="btn btn-outline-success btn-block">No, stay here</button>
+    <div id="divSettings" class="cover z-index-20">
+        <div class="center height-100vh width-100vw">
+            <div class="width-275">
+                <h1>
+                    <img class="vtop" src="img/shield_h50.png" alt="logo" height="41" /> CryptoChat
+                </h1>
+                <hr />
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowUsername" data-toggle="tooltip">
+                    <span class="input-group-addon width-25 no-padding">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" class="flex-grow-1 form-control" placeholder="Username" id="txtUsername" maxlength="24">
+                </div>
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowRoom" data-toggle="tooltip">
+                    <span class="input-group-addon width-25 no-padding">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" class="flex-grow-1 form-control" placeholder="Room" id="txtRoom" maxlength="128">
+                </div>
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowPassword" data-toggle="tooltip">
+                    <span class="input-group-addon width-25 no-padding">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                    <input type="password" class="flex-grow-1 form-control" placeholder="Password" id="txtPassword" maxlength="128" />
+                    <div class="input-group-addon no-margin no-padding flex flex-row center">
+                        <span class="flex-grow-1 width-25" id="btnRandomPassword" data-toggle="tooltip">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </span>
+                        <span class=" flex-grow-1 width-25 border-left" id="btnCopyPassword" data-toggle="tooltip">
+                            <i class="fa fa-clipboard" aria-hidden="true"></i>
+                        </span>
+                        <span class=" flex-grow-1 width-25 border-left" id="btnShowHidePassword" data-toggle="tooltip">
+                            <i class="fa fa-eye" aria-hidden="true" id="icoShowHide"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding" id="rowPasswordStrength">
+                    <div class="progress width-100p" data-toggle="popover" id="divPwStrengthWrapper">
+                        <div class="progress-bar bg-danger" role="progressbar" id="pbPwStrength" style="width: 1%"> </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding">
+                    <button class="btn  btn-success btn-block disabled" type="submit" id="btnApplySettings">Join</button>
+                </div>
+                <div class="input-group flex margin-bottom-5 margin-top-5 no-padding display-none" id="rowCancelSettings">
+                    <button class="btn btn-sm btn-success btn-block" type="submit" id="btnCancelSettings">Cancel</button>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-<div id="divKeyGeneration" class="cover display-none z-index-40">
-    <div class="center height-100vh width-100vw">
-        <div class="justify">
-            <h1 id="txtKeyGenerationAction">Loading...</h1>
-            <br/>
-            <div class="progress-pie-chart">
-                <div class="ppc-progress">
-                    <div class="ppc-progress-fill"></div>
-                </div>
-                <div class="ppc-percents">
-                    <div class="pcc-percents-wrapper">
-                        <span>0%</span>
+    <div id="divLeaveRoom" class="cover display-none z-index-30">
+        <div class="center height-100vh width-100vw">
+            <div class="justify">
+                <h1>
+                    Are you sure you want to leave this room?
+                    <br />
+                    <small>You will no longer receive any messages</small>
+                </h1>
+                <hr />
+                <button id="btnLeaveRoomApproved" class="btn btn-outline-success btn-block">Yes, leave the room</button>
+                <button id="btnLeaveRoomDenied" class="btn btn-outline-success btn-block">No, stay here</button>
+            </div>
+        </div>
+    </div>
+    <div id="divKeyGeneration" class="cover display-none z-index-40">
+        <div class="center height-100vh width-100vw">
+            <div class="justify">
+                <h1 id="txtKeyGenerationAction">Loading...</h1>
+                <br />
+                <div class="progress-pie-chart">
+                    <div class="ppc-progress">
+                        <div class="ppc-progress-fill"></div>
+                    </div>
+                    <div class="ppc-percents">
+                        <div class="pcc-percents-wrapper">
+                            <span>0%</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="divContent" class="cover display-none flex flex-column width-100vw height-100vh z-index-10">
-    <div class="flex flex-sm-column flex-column flex-md-row flex-grow-1">
-        <div class="shadow-box height-sm-115px flex-md-grow-3 padding-15 flex flex-column" id="divUserList">
-            <div>
-                <h3 class="title-md title-sm">Users</h3>
-                <hr/>
+    <div id="divContent" class="cover display-none flex flex-column width-100vw height-100vh z-index-10">
+        <div class="flex flex-sm-column flex-column flex-md-row flex-grow-1">
+            <div class="shadow-box height-sm-115px flex-md-grow-3 padding-15 flex flex-column" id="divUserList">
+                <div>
+                    <h3 class="title-md title-sm">Users</h3>
+                    <hr />
+                </div>
+                <div class="flex flex-md-column flex-sm-row flex-sm-wrap scrollbar-y-auto" id="divUsers">
+                    <i>None</i>
+                </div>
             </div>
-            <div class="flex flex-md-column flex-sm-row flex-sm-wrap scrollbar-y-auto" id="divUsers">
-                <i>None</i>
+            <div class="shadow-box flex-grow-9 padding-15 flex flex-column">
+                <div>
+                    <h3 class="title-md title-sm">Chat</h3>
+                    <hr />
+                </div>
+                <div class="scrollbar-y-auto scrollbar-x-hidden height-max-100p padding-right-5" id="divChat">
+                    <button class="btn btn-outline-success bottom-115 right-40 position-absolute" id="btnScrollDown">
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="shadow-box flex-grow-9 padding-15 flex flex-column">
-            <div>
-                <h3 class="title-md title-sm">Chat</h3>
-                <hr/>
-            </div>
-            <div class="scrollbar-y-auto scrollbar-x-hidden height-max-100p padding-right-5" id="divChat">
-                <button class="btn btn-outline-success bottom-115 right-40 position-absolute" id="btnScrollDown">
-                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        <div class="height-85 flex flex-row padding-5 ">
+            <div class="flex flex-column flex-grow-1  no-margin">
+                <button id="btnShowHideUserList" class="flex-grow-1 btn btn-outline-success no-padding " data-toggle="tooltip" title="Show/Hide user list" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <button id="btnSettings" class="flex-grow-1 btn btn-outline-success no-padding margin-bottom-5 margin-top-5" data-toggle="tooltip" title="Settings" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </button>
+                <button id="btnLeaveRoom" class="flex-grow-1 btn btn-outline-success no-padding" data-toggle="tooltip" title="Leave room" data-placement="right" data-delay='{"show":"500"}'>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                 </button>
             </div>
+            <div class="flex-grow-10 padding-left-5 padding-right-5">
+                <textarea class="form-control height-100p width-100p box-sizing-border" placeholder="Message" id="txtMessage"></textarea>
+            </div>
+
+            <button class="flex-grow-1 btn btn-success no-padding" type="submit" id="btnSendMessage" data-toggle="tooltip" title="Send Message" data-placement="left" data-delay='{"show":"500"}'>
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i><br />
+                Send
+            </button>
         </div>
     </div>
-    <div class="height-85 flex flex-row padding-5 ">
-        <div class="flex flex-column flex-grow-1  no-margin">
-            <button id="btnShowHideUserList" class="flex-grow-1 btn btn-outline-success no-padding " data-toggle="tooltip" title="Show/Hide user list" data-placement="right" data-delay='{"show":"500"}'>
-                <i class="fa fa-bars" aria-hidden="true"></i>
-            </button>
-            <button id="btnSettings" class="flex-grow-1 btn btn-outline-success no-padding margin-bottom-5 margin-top-5" data-toggle="tooltip" title="Settings" data-placement="right" data-delay='{"show":"500"}'>
-                <i class="fa fa-cogs" aria-hidden="true"></i>
-            </button>
-            <button id="btnLeaveRoom" class="flex-grow-1 btn btn-outline-success no-padding" data-toggle="tooltip" title="Leave room" data-placement="right" data-delay='{"show":"500"}'>
-                <i class="fa fa-sign-out" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div class="flex-grow-10 padding-left-5 padding-right-5">
-            <textarea class="form-control height-100p width-100p box-sizing-border" placeholder="Message" id="txtMessage"></textarea>
-        </div>
 
-        <button class="flex-grow-1 btn btn-success no-padding" type="submit" id="btnSendMessage" data-toggle="tooltip" title="Send Message" data-placement="left" data-delay='{"show":"500"}'>
-            <i class="fa fa-paper-plane-o" aria-hidden="true"></i><br/>
-            Send
-        </button>
-    </div>
-</div>
+    <span class="display-none">
+        <link href="css/_bundle.min.css" rel="stylesheet" />
 
-<span class="display-none">
-    <script src="js/vendor/security/core-min.js"></script>
-    <script src="js/vendor/security/x64-core-min.js"></script>
-    <script src="js/vendor/security/enc-base64-min.js"></script>
-    <script src="js/vendor/security/cipher-core-min.js"></script>
-    <script src="js/vendor/security/format-hex-min.js"></script>
-    <script src="js/vendor/security/hmac-min.js"></script>
-    <script src="js/vendor/security/sha3-min.js"></script>
-    <script src="js/vendor/security/pbkdf2.js"></script>
-    <script src="js/vendor/security/mode-ctr-min.js"></script>
-    <script src="js/vendor/security/aes-min.js"></script>
+        <!--<script src="js/vendor/security/_cryptojs-bundle.min.js"></script>
+        <script src="js/vendor/security/xss.js"></script>
+        <script src="js/vendor/security/zxcvbn.js"></script>
+        <script src="js/vendor/_bundle.min.js"></script>
+        <script src="signalr/hubs"></script>
+        <script src="js/_bundle.min.js"></script>-->
 
-    <script src="js/vendor/jquery-3.1.1.min.js"></script>
-    <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
-    <script src="js/vendor/tether.min.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/security/core-min.js"></script>
+        <script src="js/vendor/security/x64-core-min.js"></script>
+        <script src="js/vendor/security/enc-base64-min.js"></script>
+        <script src="js/vendor/security/cipher-core-min.js"></script>
+        <script src="js/vendor/security/format-hex-min.js"></script>
+        <script src="js/vendor/security/hmac-min.js"></script>
+        <script src="js/vendor/security/sha3-min.js"></script>
+        <script src="js/vendor/security/pbkdf2.js"></script>
+        <script src="js/vendor/security/mode-ctr-min.js"></script>
+        <script src="js/vendor/security/aes-min.js"></script>
+        <script src="js/vendor/security/xss.min.js"></script>
+        <script src="js/vendor/security/zxcvbn.min.js"></script>
+        <script src="js/vendor/jquery-3.1.1.min.js"></script>
+        <script src="js/vendor/jquery.signalR-2.2.2.min.js"></script>
+        <script src="js/vendor/tether.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/prefixfree.min.js"></script>
+        <script src="js/vendor/clipboard.min.js"></script>
 
-    <script src="js/vendor/prefixfree.min.js"></script>
-    <script src="js/vendor/security/xss.js"></script>
-    <script src="js/vendor/security/zxcvbn.js"></script>
-    <script src="js/vendor/clipboard.min.js"></script>
+        <script src="signalr/hubs"></script>
 
-    <script src="signalr/hubs"></script>
-
-    <script src="js/helper.js"></script>
-    <script src="js/instance.js"></script>
-    <script src="js/security.js"></script>
-    <script src="js/caller.js"></script>
-    <script src="js/handler.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/cryptochat.js"></script>
-</span>
+        <script src="js/instance.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/caller.js"></script>
+        <script src="js/handler.js"></script>
+        <script src="js/security.js"></script>
+        <script src="js/cryptochat.js"></script>
+    </span>
 </body>
 </html>

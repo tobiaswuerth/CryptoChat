@@ -13,14 +13,12 @@ const replaceClass = function(id, from, to) {
     obj.removeClass(from);
     obj.addClass(to);
 };
-let tooltipTimeout = null;
-const showTooltipIf = function(id, target, func) {
+const showTooltipIf = function(id, target, func, trimmed) {
     const obj = $(`#${id}`);
     const t = $(`#${target}`);
-    if (func(obj)) {
-        clearTimeout(tooltipTimeout);
+    if (func(obj, trimmed)) {
         t.tooltip("show");
-        tooltipTimeout = setTimeout(function() {
+        setTimeout(function() {
                 t.tooltip("hide");
             },
             1000);
@@ -34,8 +32,8 @@ const removeTooltip = function(obj) {
 const removePopover = function(obj) {
     obj.popover("dispose");
 };
-const inputfieldToFailedStateIf = function(id, target, func) {
-    if (!func($(`#${id}`))) {
+const inputfieldToFailedStateIf = function(id, target, func, trimmed) {
+    if (!func($(`#${id}`), trimmed)) {
         replaceClass(target, "has-danger", "has-success");
         replaceClass(id, "form-control-danger", "form-control-success");
     } else {
@@ -43,9 +41,12 @@ const inputfieldToFailedStateIf = function(id, target, func) {
         replaceClass(id, "form-control-success", "form-control-danger");
     }
 };
-const isValueEmpty = function(obj) {
+const isValueEmpty = function(obj, trimmed = true) {
+    if (trimmed) {
+        return obj.val().trim() === "";
+    }
     return obj.val() === "";
 };
 const nextColor = function(color) {
-    return colors.indexOf(color) === colors.length ? colors[0] : colors[colors.indexOf(color) + 1];
+    return colors.indexOf(color) + 1 === colors.length ? colors[0] : colors[colors.indexOf(color) + 1];
 };

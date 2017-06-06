@@ -99,6 +99,10 @@
     <Content Include="css\tether-theme-arrows.min.css" />
     <Content Include="css\tether-theme-basic.min.css" />
     <Content Include="css\tether.min.css" />
+    <Content Include="css\_bundle.css" />
+    <Content Include="css\_bundle.min.css">
+      <DependentUpon>_bundle.css</DependentUpon>
+    </Content>
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\favicon.ico" />
@@ -125,7 +129,14 @@
     <Content Include="css\bootstrap-grid.min.css.map" />
     <Content Include="css\bootstrap-reboot.min.css.map" />
     <Content Include="css\bootstrap.min.css.map" />
+    <Content Include="js\vendor\security\core-min.js" />
     <Content Include="js\vendor\security\zxcvbn.js.map" />
+    <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -136,14 +147,25 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="js\vendor\prefixfree.min.js" />
-    <Content Include="js\vendor\security\zxcvbn.js" />
+    <Content Include="js\vendor\security\zxcvbn.min.js" />
+    <Content Include="js\vendor\security\_cryptojs-bundle.js" />
+    <Content Include="js\vendor\security\_cryptojs-bundle.min.js">
+      <DependentUpon>_cryptojs-bundle.js</DependentUpon>
+    </Content>
     <Content Include="js\vendor\tether.min.js" />
+    <Content Include="js\vendor\_bundle.js" />
+    <Content Include="js\vendor\_bundle.min.js">
+      <DependentUpon>_bundle.js</DependentUpon>
+    </Content>
     <Content Include="js\worker\keyworker.js" />
+    <Content Include="js\_bundle.js" />
+    <Content Include="js\_bundle.min.js">
+      <DependentUpon>_bundle.js</DependentUpon>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="js\vendor\jquery.signalR-2.2.2.min.js" />
     <Content Include="js\vendor\security\aes-min.js" />
     <Content Include="js\vendor\security\cipher-core-min.js" />
-    <Content Include="js\vendor\security\core-min.js" />
     <Content Include="js\vendor\security\enc-base64-min.js" />
     <Content Include="js\vendor\security\format-hex-min.js" />
     <Content Include="js\vendor\security\hmac-min.js" />
@@ -151,7 +173,7 @@
     <Content Include="js\vendor\security\pbkdf2.js" />
     <Content Include="js\vendor\security\sha3-min.js" />
     <Content Include="js\vendor\security\x64-core-min.js" />
-    <Content Include="js\vendor\security\xss.js" />
+    <Content Include="js\vendor\security\xss.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
