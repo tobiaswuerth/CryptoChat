@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link href="css/_bundle.min.css" rel="stylesheet" />
     <title>CryptoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -118,7 +119,10 @@
                 <div class="input-group flex margin-bottom-5 margin-top-5 no-padding display-none" id="rowCancelSettings">
                     <button class="btn btn-sm btn-success btn-block" type="submit" id="btnCancelSettings">Cancel</button>
                 </div>
-
+                
+                <small>
+                    <a href="https://github.com/tobiaswuerth/CryptoChat" target="_blank">need help?</a>
+                </small>
             </div>
         </div>
     </div>
@@ -155,7 +159,7 @@
         </div>
     </div>
     <div id="divContent" class="cover display-none flex flex-column width-100vw height-100vh z-index-10">
-        <div class="flex flex-sm-column flex-column flex-md-row flex-grow-1">
+        <div class="flex flex-sm-column scrollbar-hidden flex-column flex-md-row flex-grow-1">
             <div class="shadow-box height-sm-115px flex-md-grow-3 padding-15 flex flex-column" id="divUserList">
                 <div>
                     <h3 class="title-md title-sm">Users</h3>
@@ -201,7 +205,6 @@
     </div>
 
     <span class="display-none">
-        <link href="css/_bundle.min.css" rel="stylesheet" />
 
         <!--<script src="js/vendor/security/_cryptojs-bundle.min.js"></script>
         <script src="js/vendor/security/xss.js"></script>
