@@ -30,6 +30,7 @@
 .scrollbar-y-auto { overflow-y: auto; }
 
 .scrollbar-x-hidden { overflow-x: hidden; }
+.scrollbar-hidden { overflow: hidden; }
 
 .margin-bottom-10 { margin-bottom: 10px; }
 
@@ -86,7 +87,6 @@
     max-height: 100vh;
     min-height: 100vh;
 }
-
 .width-100vw {
     max-width: 100vw;
     min-width: 100vw;
